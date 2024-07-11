@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+  <title>Pista de Oportunidades</title>
+</head>
+
+<body>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="popup.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#staticBackdrop').modal('show');
+    });
+  </script>
+
+  <style>
+    img {
+      max-width: 100%;
+    }
+
+    .modal-content {
+      background-color: transparent;
+      border: none;
+    }
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-header .btn-close {
+      filter: invert(1);
+    }
+  </style>
+
+</body>
+
+</html>
