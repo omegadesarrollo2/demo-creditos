@@ -7,20 +7,106 @@
     margin-left: 10px;
     margin-right: 10px;
   }
+  .content-dashboard {
+    background: #ffffff;
+    border-top: 3px solid #cdd1db;
+    padding: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
 </style>
 
-<h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
+<h1 class="titulo-principal"><i class="fas fa-hand-holding-usd"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
-  <div class="col-lg-12 text-right margin10 mb-3">
-    <button class="btn btn-warning btn-sm" onclick="$('#div_filtro').toggle();">Ver filtro</button>
+<?php
+    $validaciones = array("En estudio", "Aprobado", "Desembolsado");
+    $validaciones[6] = "Cambio de condiciones";
+    $validaciones[4] = "Rechazado";
+    $validaciones[5] = "Radicado";
+    $validaciones[8] = "Pasar a desembolso";
+    $validaciones[9] = "En devolución";
+
+  ?>
+  <div class="menu-filter">
+    <?php
+      $estilo = "";
+      if ($_GET['i'] == "" and $_GET['incompletas'] == "" and $_GET['sin_terminar'] == "") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <?php
+      $estilo = "";
+
+      if ($_GET['i'] == "todas") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <a href="/administracion/solicitudes?i=todas" class="btn btn-primary btn-sm mb-2" style=" <?php echo $estilo; ?>">Todas</a>
+    <?php for ($i = 0; $i <= 9; $i++) { ?>
+      <?php
+      $estilo = "";
+      if ($validaciones[$i]) {
+        if ($_GET['i'] == $i and $_GET['i'] != "" && $_GET['i'] != "todas") {
+          $estilo = "background:#7CB33E; ";
+        }
+        ?>
+        <a href="/administracion/solicitudes/?i=<?php echo $i; ?>" class="btn btn-primary btn-sm mb-2 btn-sl-filters"
+           style=" <?php echo $estilo; ?>">
+          <?php
+            if ($i == 9) {
+              $redPoint = count($this->slDevolucion);
+              echo '<span class="red-point">' . $redPoint . '</span>';
+            }
+          ?>
+          <?php echo $validaciones[$i]; ?>
+        </a>
+      <?php }
+    } ?>
+
+    <?php
+      $estilo = "";
+      if ($_GET['incompletas'] == "1") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <a href="/administracion/solicitudes/?incompletas=1" class="btn btn-primary btn-sm mb-2"
+       style=" <?php echo $estilo; ?>">Aplazados</a>
+    <?php
+      $estilo = "";
+      if ($_GET['sin_terminar'] == "1") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <a href="/administracion/solicitudes/?sin_terminar=1" class="btn btn-primary btn-sm mb-2"
+       style=" <?php echo $estilo; ?>">Sin terminar</a>
+    <?php
+      $estilo = "";
+      if ($_GET['confirmadas_asociado'] == "1") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <a href="/administracion/solicitudes/?confirmadas_asociado=1" class="btn btn-primary btn-sm mb-2"
+       style=" <?php echo $estilo; ?>">Aprobadas por el asociado</a>
+    <?php
+      $estilo = "";
+      if ($_GET['rechazadas_asociado'] == "1") {
+        $estilo = "background:#7CB33E; ";
+      }
+    ?>
+    <a href="/administracion/solicitudes/?rechazadas_asociado=1" class="btn btn-primary btn-sm mb-2"
+       style=" <?php echo $estilo; ?>">Rechazadas por el asociado</a> 
+
+  </div>
+  <div class="col-lg-12 text-right margin10">
+    <button class="btn btn-warning btn-sm search-button" onclick="$('#div_filtro').toggle();">Ver filtro <i class="fas fa-search"></i></button>
   </div>
   <form
     action="<?php echo $this->route; ?>?i=<?= $_GET['i']; ?>&incompletas=<?= $_GET['incompletas']; ?>&sin_terminar=<?= $_GET['sin_terminar']; ?>&confirmadas_asociado=<?= $_GET['confirmadas_asociado']; ?>&rechazadas_asociado=<?= $_GET['rechazadas_asociado']; ?>"
     method="post" id="div_filtro" style="display: none;">
     <div class="content-dashboard">
-      <div class="row">
+      <div class="row filters">
         <div class="col-lg-2">
-          <label>cedula</label>
+          <label>cédula</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-verde-claro "><i class="fas fa-pencil-alt"></i></span>
@@ -30,7 +116,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>linea</label>
+          <label>línea</label>
           <label class="input-group">
             <select class="form-control" name="linea">
               <option value="">Todas</option>
@@ -45,7 +131,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>linea desembolso</label>
+          <label>línea desembolso</label>
           <label class="input-group">
             <select class="form-control" name="linea_desembolso">
               <option value="">Todas</option>
@@ -61,7 +147,7 @@
           </label>
         </div>
         <div class="col-lg-2 d-none">
-          <label>validacion</label>
+          <label>validación</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-rosado "><i class="fas fa-pencil-alt"></i></span>
@@ -81,7 +167,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>apellido1</label>
+          <label>apellido 1</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-azul "><i class="fas fa-pencil-alt"></i></span>
@@ -91,7 +177,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>apellido2</label>
+          <label>apellido 2</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-rojo-claro "><i class="fas fa-pencil-alt"></i></span>
@@ -129,7 +215,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>pagare</label>
+          <label>pagaré</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-rosado "><i class="fas fa-pencil-alt"></i></span>
@@ -139,7 +225,7 @@
           </label>
         </div>
         <div class="col-lg-2">
-          <label>quien</label>
+          <label>quién</label>
           <label class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text input-icono fondo-azul-claro "><i class="far fa-list-alt"></i></span>
@@ -252,89 +338,9 @@
     </div>
   </form>
 
-  <?php
-    $validaciones = array("En estudio", "Aprobado", "Desembolsado");
-    $validaciones[6] = "Cambio de condiciones";
-    $validaciones[4] = "Rechazado";
-    $validaciones[5] = "Radicado";
-    $validaciones[8] = "Pasar a desembolso";
-    $validaciones[9] = "En devolución";
 
-  ?>
-  <div align="left">
-    <?php
-      $estilo = "";
-      if ($_GET['i'] == "" and $_GET['incompletas'] == "" and $_GET['sin_terminar'] == "") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <?php
-      $estilo = "";
-
-      if ($_GET['i'] == "todas") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <a href="/administracion/solicitudes?i=todas" class="btn btn-primary btn-sm mb-2" style=" <?php echo $estilo; ?>">Todas</a>
-    &nbsp;
-    <?php for ($i = 0; $i <= 9; $i++) { ?>
-      <?php
-      $estilo = "";
-      if ($validaciones[$i]) {
-        if ($_GET['i'] == $i and $_GET['i'] != "" && $_GET['i'] != "todas") {
-          $estilo = "background:#7CB33E; ";
-        }
-        ?>
-        <a href="/administracion/solicitudes/?i=<?php echo $i; ?>" class="btn btn-primary btn-sm mb-2 btn-sl-filters"
-           style=" <?php echo $estilo; ?>">
-          <?php
-            if ($i == 9) {
-              $redPoint = count($this->slDevolucion);
-              echo '<span class="red-point">' . $redPoint . '</span>';
-            }
-          ?>
-          <?php echo $validaciones[$i]; ?>
-        </a> &nbsp;
-      <?php }
-    } ?>
-
-    <?php
-      $estilo = "";
-      if ($_GET['incompletas'] == "1") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <a href="/administracion/solicitudes/?incompletas=1" class="btn btn-primary btn-sm mb-2"
-       style=" <?php echo $estilo; ?>">Aplazados</a> &nbsp;
-    <?php
-      $estilo = "";
-      if ($_GET['sin_terminar'] == "1") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <a href="/administracion/solicitudes/?sin_terminar=1" class="btn btn-primary btn-sm mb-2"
-       style=" <?php echo $estilo; ?>">Sin terminar</a> &nbsp;
-    <?php
-      $estilo = "";
-      if ($_GET['confirmadas_asociado'] == "1") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <a href="/administracion/solicitudes/?confirmadas_asociado=1" class="btn btn-primary btn-sm mb-2"
-       style=" <?php echo $estilo; ?>">Aprobadas por el asociado</a> &nbsp;
-    <?php
-      $estilo = "";
-      if ($_GET['rechazadas_asociado'] == "1") {
-        $estilo = "background:#7CB33E; ";
-      }
-    ?>
-    <a href="/administracion/solicitudes/?rechazadas_asociado=1" class="btn btn-primary btn-sm mb-2"
-       style=" <?php echo $estilo; ?>">Rechazadas por el asociado</a> &nbsp;
-
-  </div>
 
   <div align="center">
-    <br>
     <ul class="pagination justify-content-center">
       <?php
         $url = $this->route;
@@ -364,11 +370,11 @@
   </div>
   <div class="content-dashboard">
     <div class="franja-paginas">
-      <div class="row">
+      <div class="row justify-content-between">
         <div class="col-lg-5">
           <div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
         </div>
-        <div class="col-lg-3 text-right">
+        <div class="col-lg-3 text-right ml-auto">
           <div class="texto-paginas">Registros por pagina:</div>
         </div>
         <div class="col-lg-1">
@@ -402,14 +408,14 @@
         <thead>
         <tr>
           <td>ID</td>
-          <td>cedula</td>
-          <td>linea</td>
+          <td>cédula</td>
+          <td>línea</td>
           <?php if (!$_SESSION['kt_login_level'] != "13") { ?>
             <td>estado</td>
           <?php } ?>
           <td>nombres</td>
-          <td>apellido1</td>
-          <td>apellido2</td>
+          <td>apellido 1</td>
+          <td>apellido 2</td>
           <td>asignado a</td>
           <?php if ($_GET["i"] == 2) { ?>
             <td>fecha desembolsado</td>
@@ -432,6 +438,7 @@
             <td><?php echo $this->list_linea_desembolso[$content->linea_desembolso]; ?></td>
             <?php if (!$_SESSION['kt_login_level'] != "13") { ?>
               <td>
+                
                 <?php if ($content->paso != "8") { ?>
                   <?php if ($content->incompleta != "") { ?>
                     Sin terminar
@@ -493,6 +500,7 @@
           </tr>
           <tr>
           <td colspan="13" class="text-right">
+          <div class="buttons-row">
           <div>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "8") { ?>
@@ -505,8 +513,41 @@
                 class="fas fa-signature"></i></a>
 
             <?php if ($_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16") { ?>
-              <a class="btn btn-verde btn-sm" href="<?php echo $this->route; ?>/editarcorreo?solicitud=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Editar Correos"><i class="fas fa-at"></i></a>
+              <button class="btn btn-verde btn-sm" data-placement="top" title="Editar Correos" data-toggle="modal" data-target="#emails_model_<?php echo $content->id ?>"><i class="fas fa-at"></i></button>
+                 <div class="modal fade modal-correos" id="emails_model_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body text-left">
+                          <form action="/administracion/solicitudes/updatecorreos" class="row">
+                            <div class="col-12">
+                              <h4 class="comun-title">Editar correos</h4>
+                            </div>
+                            <div class="form-group col-12 mt-1">
+                              <label for="">Solicitud</label>
+                              <input type="text" class="form-control" name="id" value="<?php echo $content->id ?>" readonly>
+                            </div>
+                            <div class="form-group col-12 mt-1">
+                              <label for="">Correo Personal</label>
+                              <input type="email" name="correo_personal" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $content->correo_personal ?>">
+                            </div>
+                            <div class="form-group col-12">
+                              <label for="">Correo Empresarial </label>
+                              <input type="email" name="correo_empresarial" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $content->correo_empresarial ?>">
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                              <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             <?php } ?>
 
             <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/detalle/?id=<?= $id ?>"
@@ -533,15 +574,163 @@
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
-              <a class="btn btn-rojo btn-sm" href="/administracion/documentosadicionales/?solicitud=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Documentos adicionales"><i
-                  class="fas fa-file"></i></a>
+              <a class="btn btn-rojo btn-sm" data-toggle="modal" data-target="#documents_modal_<?php echo $content->id ?>">
+                <i class="fas fa-file" data-toggle="tooltip" data-placement="top" title="Documentos adicionales"></i>
+              </a>
+              <!-- <a class="btn btn-rojo btn-sm" href="/administracion/documentosadicionales/?solicitud=<?= $id ?>">
+                <i class="fas fa-file" data-toggle="tooltip" data-placement="top" title="Documentos adicionales"></i>
+              </a> -->
+                <div class="modal fade modal-correos" id="documents_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-left">
+                        <form action="/administracion/documentosadicionales/insert2" class="row" method="post" enctype="multipart/form-data">
+                          <div class="col-12">
+                            <h4 class="comun-title">Documentos adicionales</h4>
+                          </div>
+                          <div class="col-6 form-group">
+                            <label for="titulo" class="control-label">titulo</label>
+                            <label class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text input-icono  fondo-verde-claro "><i class="fas fa-pencil-alt"></i></span>
+                              </div>
+                              <input type="text" value="<?= $this->content->titulo; ?>" name="titulo" id="titulo" class="form-control"
+                                required>
+                            </label>
+                            <div class="help-block with-errors"></div>
+                          </div>
+                          <div class="col-6 form-group">
+                            <label for="archivo">archivo</label>
+                            <input type="file" name="archivo" id="archivo" class="form-control  file-document"
+                              data-buttonName="btn-primary" onchange="validardocumento('archivo');" accept=" image/*, application/pdf">
+                            <div class="help-block with-errors"></div>
+                          </div>
+                          <input type="hidden" name="fecha" value="<?php echo date("Y-m-d H:i:s"); ?>">
+                          <input type="hidden" name="quien" value="<?php echo $_SESSION['kt_login_id']; ?>">
+                          <input type="hidden" name="solicitud" value="<?php echo $content->id ?>">
+                          <div class="col-12 d-flex justify-content-center mt-2">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                          </div>
+                        </form>
+                        <div class="col-12">
+                          <hr>
+                        </div>
+                        <div class="col-12">
+                          <div class="contenedor-documentos">
+                            <div class="table-header">
+                              <div class="row">
+                                  <div class="col-4 col">Titulo</div>
+                                  <div class="col-4 col">Archivo</div>
+                                  <div class="col-4 col"></div>
+                              </div>
+                            </div>
+                            <div class="table-body">
+                              <?php foreach ($content->documentos_adicionales as $adicionales) : ?>
+                                <?php $id_adicionales =  $adicionales->id; ?>
+                                
+                                <div class="row">
+                                  <div class="col-4 col">
+                                    <?=$adicionales->titulo;?>
+                                  </div>
+                                  <div class="col-4 col">
+                                    <a href="/images/<?php echo $adicionales->archivo;?>" target="_blank"><?php echo $adicionales->archivo;?></a>
+                                  </div>
+                                  <div class="col-4 col d-flex justify-content-end">
+                                    <div>
+                                      <span data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                        <a class="btn btn-rojo btn-sm" data-toggle="modal" data-target="#modal_adicionales<?= $id_adicionales ?>"><i class="fas fa-trash-alt"></i></a>
+                                      </span>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade text-left" id="modal_adicionales<?= $id_adicionales ?>" tabindex="-1" role="dialog"
+                                      aria-labelledby="myModalLabel">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <h4 class="modal-title comun-title mb-3" id="myModalLabel">Eliminar Registro</h4>
+                                            <div class="">¿Esta seguro de eliminar este registro?</div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <a class="btn btn-danger"
+                                              href="/administracion/documentosadicionales/delete2?id=<?= $id_adicionales ?>">Eliminar</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              <?php endforeach; ?>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "16") { ?>
-              <a class="btn btn-azul-claro btn-sm"
-                 href="/administracion/solicitudes/solicitudgarantias/?solicitud=<?= $id ?>" data-toggle="tooltip"
-                 data-placement="top" title="Garantias"><i class="fas fa-list"></i></a>
+              <!-- <a class="btn btn-azul-claro btn-sm" href="/administracion/solicitudes/solicitudgarantias/?solicitud=<?= $id ?>" data-toggle="modal" data-target="garantias_modal_<?php echo $content->id ?>">
+                <i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="Garantias"></i>
+              </a> -->
+              <a class="btn btn-azul-claro btn-sm" data-toggle="modal" data-target="#garantias_modal_<?php echo $content->id ?>">
+                <i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="Garantias"></i>
+              </a>
+                <div class="modal fade modal-correos" id="garantias_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-left">
+                        <form action="/administracion/solicitudes/updategarantia" method="post" class="row">
+                          <div class="col-12">
+                            <h4 class="comun-title">Editar Garantías</h4>
+                          </div>
+                          <div class="form-group col-12 mt-1">
+                            <label for="">Solicitud</label>
+                            <input type="text" class="form-control" name="id" value="<?php echo $content->id ?>" readonly>
+                          </div>
+                          <div class="form-group col-12 mt-1">
+                            <label for="">Tipo de garantía</label>
+                            <select name="tipo_garantia" id="" class="form-control">
+                            <option value="" selected disabled>Seleccione</option>
+                              <?php foreach($this->garantias as $gar): ?>
+                                <option value="<?php echo $gar->garantia_id ?>" <?php if($content->tipo_garantia == $gar->garantia_id){ echo 'selected'; } ?> ><?php echo $gar->garantia_nombre ?></option>
+                              <?php endforeach; ?>
+                            </select>
+                          </div>
+                          <div class="form-group col-12 mt-1">
+                            <label for="">Garantía adicional</label>
+                            <select name="garantia_adicional" id="" class="form-control">
+                              <option value="" selected disabled>Seleccione</option>
+                              <?php foreach($this->garantias as $gar): ?>
+                                <option value="<?php echo $gar->garantia_id ?>" <?php if($content->garantia_adicional == $gar->garantia_id){ echo 'selected'; } ?> ><?php echo $gar->garantia_nombre ?></option>
+                              <?php endforeach; ?>
+                            </select>
+                          </div>
+                          <div class="col-12 d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "4" or $_SESSION['kt_login_level'] == "9" or $_SESSION['kt_login_level'] == "16") { ?>
@@ -593,9 +782,143 @@
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
 
-              <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/historialestados/?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Historial de estados"><i class="fa fa-file"></i></a>
+              <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/historialestados/?id=<?= $id ?>" data-toggle="modal" data-target="#historial_modal_<?php echo $content->id ?>">
+                <i class="fa fa-file" data-toggle="tooltip" data-placement="top" title="Historial de estados"></i>
+              </a>
+                 <div class="modal fade modal-correos" id="historial_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-left">
+                        <form action="/administracion/solicitudes/updategarantia" method="post" class="row">
+                          <div class="col-12">
+                            <h4 class="comun-title">Historial de estados</h4>
+                          </div>
+                          <div class="contenedor-documentos historial">
+                          <?php if(is_countable($content->logestado) && count($content->logestado)>0){?>
+                            <div class="table-header">
+                              <div class="row">
+                                <div class="col col-3">Estado</div>
+                                <div class="col col-3">Fecha</div>
+                                <div class="col col-3">Quien</div>
+                                <div class="col col-3">Observación</div>
+                              </div>
+                            </div>
+                            <div class="table-body">
+                              <?php foreach($content->logestado as $key => $value){?>
+                                <div class="row">
+                                  <div class="col col-3"><?php echo $value->estado?></div>
+                                  <div class="col col-3"><?php echo $value->fecha?></div>
+                                  <div class="col col-3">
+                                    <?php 
+                                      if($this->usuarios[$value->usuario]!=""){ 
+                                        echo $this->usuarios[$value->usuario]; 
+                                      }else{
+                                        echo $value->usuario;
+                                      }
+                                      ?>
+                                  </div>
+                                  <div class="col col-3"><?php echo $value->observacion?></div>
+                                </div>
+                              <?php }?>
+                            </div>
+                          <?php }else{?>
+                            <div class="table-header">
+                              <div class="row">
+                                <div class="col col-3">Estado</div>
+                                <div class="col col-3">Fecha</div>
+                                <div class="col col-3">Quien</div>
+                                <div class="col col-3">Observación</div>
+                              </div>
+                            </div>
+                            <div class="table-body">
+                              <?php if($content->fecha_asignado){?>
+                                <div class="row">
+                                  <div class="col col-3"><b>Radicado</b></div>
+                                  <div class="col col-3"><?php echo $content->fecha_asignado;?></div>
+                                  <div class="col col-3">Asociado</div>
+                                  <div class="col col-3"></div>
+                                </div>
+                              <?php }?>
+                              <?php if($content->fecha_autorizo){?>
+                                <div class="row">
+                                  <div class="col col-3"><b><?php echo $this->list_estado_autorizo[$content->estado_autorizo];?></b></div>
+                                  <div class="col col-3"><?php echo $content->fecha_autorizo;?></div>
+                                  <div class="col col-3"><?php echo $this->usuarios[$content->asignado]; ?></div>
+                                  <div class="col col-3"></div>
+                                </div>
+                              <?php }?>
+                              <?php if($content->fecha_incompleta){?>
+                                <div class="row">
+                                  <div class="col col-3"><b>Aplazada (incompleta)</b></div>
+                                  <div class="col col-3"><?php echo $content->fecha_incompleta;?></div>
+                                  <div class="col col-3"><?php echo $this->usuarios[$content->asignado]; ?></div>
+                                  <div class="col col-3"><?php echo $content->incompleta; ?></div>
+                                </div>
+                              <?php }?>
+                              <?php if($content->fecha){?>
+                                <div class="row">
+                                  <div class="col col-3"><b><?php echo $this->validaciones[$content->validacion];?></b></div>
+                                  <?php if($content->validacion==2){ ?>
+                                  <div class="col col-3"><?php echo $content->fecha_desembolso;?></div>
+                                  <?php }else if($content->fecha_estado){?>
+                                  <div class="col col-3"><?php echo $content->fecha_estado?></div>
+                                  <?php }else{?>
+                                  <div class="col col-3"><?php echo $content->fecha?></div>
+                                  <?php }?>
+                                  <div class="col col-3">
+                                    <?php if($content->validacion==2 or $content->validacion==8){ ?>
+                                    <?php echo $this->usuarios[$content->quien_desembolso]; ?>
+                                    <?php }else{ ?>
+                                    <?php echo $this->usuarios[$content->asignado]; ?>
+                                    <?php } ?>
+                                  </div>
+                                </div>
+                              <?php }?>
 
+                              <?php if($content->fecha_aceptacion){?>
+                                <div class="row">
+                                  <div class="col col-3"><b><?php echo $this->acepto_condiciones[$content->acepto_cambios];?></b></div>
+                                  <div class="col col-3"><?php echo $content->fecha_aceptacion;?></div>
+                                  <div class="col col-3">Asociado</div>
+                                  <div class="col col-3"></div>
+                                </div>
+                              <?php }?>
+
+                              <?php if(is_countable($this->envios) && count($this->envios)>0){?>
+                              <?php foreach ($this->envios as $key => $value): ?>
+                                <div class="row">
+                                  <div class="col col-3"><b><?php if($key==0){ echo "Envio Pagaré"; }else{ echo "Reenvio Pagaré"; } ?></b></div>
+                                  <div class="col col-3"><?php echo $value->envio_fecha;?></div>
+                                  <div class="col col-3"><?php echo $this->usuarios[$value->envio_quien]; ?></div>
+                                  <div class="col col-3"></div>
+                                </div>
+                              <?php endforeach ?>
+                              <?php }?>
+                              <?php if($this->existe_pagare->estado=="1"){?>
+                                <div class="row">
+                                  <div class="col col-3"><b>Pagaré Firmado</b></div>
+                                  <div class="col col-3"><?php echo $this->existe_pagare->fecha_firma;?></div>
+                                  <div class="col col-3">Asociado</div>
+                                  <div class="col col-3"></div>
+                                </div>
+                              <?php }?>
+                            </div>
+                          <?php }?>
+                          </div>
+                          <div class="col-12 d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <!-- <button type="submit" class="btn btn-success">Guardar</button> -->
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "16") { ?>
@@ -627,48 +950,7 @@
             <?php } ?>
           </div>
 
-          <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
-            <?php if ($content->estado_autorizo == "1" || $content->estado_autorizo == "4") { ?>
-              <div class="margin10"><b>Ente Aprobador:</b>
-
-                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
-                  <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/enviaracomite/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a comité de crédito"><i
-                      class="fas fa-users"></i></a>
-                <?php } ?>
-
-                <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatocomite/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación comité de crédito"
-                   target="_blank"><i class="fas fa-users"></i></a>
-
-                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
-                  <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/enviaracomiteespecial/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a junta directiva"><i
-                      class="fas fa-users"></i></a>
-                <?php } ?>
-                <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/formatocomiteespecial/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación junta directiva"
-                   target="_blank"><i class="fas fa-users"></i></a>
-
-                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
-                  <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/enviaragerencia/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a gerencia"><i
-                      class="fas fa-user"></i></a>
-                <?php } ?>
-
-                <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/formatogerencia/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación gerencia" target="_blank"><i
-                    class="fas fa-user"></i></a>
-
-                <?php if ($content->quien_aprobo == "Analista") { ?>
-                  <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatoanalista/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Formato aprobación analista" target="_blank"><i
-                      class="fas fa-user"></i></a>
-                <?php } ?>
-
-              </div>
-            <?php } ?>
-          <?php } ?>
+          
 
           <?php if ($_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "12") { ?>
             <?php if ($content->estado_autorizo == "1") { ?>
@@ -695,7 +977,7 @@
                 <?php if ($this->pagares_estado[$content->pagare] != "1") { ?>
                   <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "14") { ?>
                     <?php if ($this->pagares_estado[$content->pagare] == "") { ?>
-                      <a class="btn btn-verde btn-sm mt-2" href="<?php echo $this->route; ?>/aprobar/?id=<?= $id ?>"
+                      <a class="btn btn-verde btn-sm" href="<?php echo $this->route; ?>/aprobar/?id=<?= $id ?>"
                          data-toggle="tooltip" data-placement="top" title="Generar pagaré"><i
                           class="fas fa-file-signature"></i></a>
                     <?php } else if ($this->pagares_estado[$content->pagare] == 0) { ?>
@@ -760,7 +1042,51 @@
                 </div>
               </div>
             </div>
+            </div>
+            <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
+            <?php if ($content->estado_autorizo == "1" || $content->estado_autorizo == "4") { ?>
+              <div class="margin10"><b>Ente Aprobador:</b>
+
+                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
+                  <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/enviaracomite/?id=<?= $id ?>"
+                     data-toggle="tooltip" data-placement="top" title="Enviar a comité de crédito"><i
+                      class="fas fa-users"></i></a>
+                <?php } ?>
+
+                <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatocomite/?id=<?= $id ?>"
+                   data-toggle="tooltip" data-placement="top" title="Formato aprobación comité de crédito"
+                   target="_blank"><i class="fas fa-users"></i></a>
+
+                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
+                  <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/enviaracomiteespecial/?id=<?= $id ?>"
+                     data-toggle="tooltip" data-placement="top" title="Enviar a junta directiva"><i
+                      class="fas fa-users"></i></a>
+                <?php } ?>
+                <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/formatocomiteespecial/?id=<?= $id ?>"
+                   data-toggle="tooltip" data-placement="top" title="Formato aprobación junta directiva"
+                   target="_blank"><i class="fas fa-users"></i></a>
+
+                <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
+                  <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/enviaragerencia/?id=<?= $id ?>"
+                     data-toggle="tooltip" data-placement="top" title="Enviar a gerencia"><i
+                      class="fas fa-user"></i></a>
+                <?php } ?>
+
+                <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/formatogerencia/?id=<?= $id ?>"
+                   data-toggle="tooltip" data-placement="top" title="Formato aprobación gerencia" target="_blank"><i
+                    class="fas fa-user"></i></a>
+
+                <?php if ($content->quien_aprobo == "Analista") { ?>
+                  <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatoanalista/?id=<?= $id ?>"
+                     data-toggle="tooltip" data-placement="top" title="Formato aprobación analista" target="_blank"><i
+                      class="fas fa-user"></i></a>
+                <?php } ?>
+
+              </div>
+            <?php } ?>
+          <?php } ?>
             </td>
+
             </tr>
           <?php } ?>
         <?php } ?>
@@ -809,3 +1135,50 @@
         }
     }
 </script> 
+<style>
+  .table-header{
+    background-color: #121b4b;
+    color: #fff;
+    border-radius: 12px;
+    border: none;
+  }
+
+  .table-header .row{
+    margin: 0;
+  }
+  .table-header .col{
+    text-align: center;
+    border: none;
+    padding: 10px;
+  }
+  .table-body .row{
+    border: 1px solid #e0e0e0;
+    margin: 10px 0;
+    border-radius: 12px;
+  }
+  .table-body .col{
+    text-align: center;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .table-body .col a{
+    color: #00c6ef;
+    top: none;
+    transition: 300ms ease;
+  }
+  .table-body .col a:hover{
+    color: #76b72b;
+  }
+  .contenedor-documentos{
+    background-color: #fff;
+    padding: 20px;
+    padding-top: 50px;
+    width: 100%;
+  }
+  .contenedor-documentos.historial{
+    padding-top: 20px;
+  }
+</style>

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $('.navbar-toggler').on('click', function () {
+    $(this).toggleClass('active')
+    $('.menu-toggle').toggleClass('active')
+  })
   $('#btn-found-user').on('click', function () {
     var user = $('#user').val();
     $.ajax({

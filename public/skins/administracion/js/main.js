@@ -1,22 +1,42 @@
 $(document).ready(function () {
+  var panel = $("#panel-botones");
+  var panelHeight = panel.outerHeight();
+  var togglePoint = panelHeight * 0.1;
+
+  $(window).on("scroll", function () {
+    if ($(window).scrollTop() > togglePoint) {
+      panel.hide(300);
+      // Update the toggle point to avoid repeated toggles at the same point
+      togglePoint = $(window).scrollTop() + panelHeight * 0.1;
+    }
+  });
+});
+
+$(document).ready(function () {
+  $(".dropdown-link").on("click", function (e) {
+    e.preventDefault();
+    $(this).toggleClass("active");
+    $(this).next().slideToggle();
+    $(this).find(".dropdown-icon").toggleClass("rotate");
+  });
 
   $(".dial").knob({
     readOnly: true,
     fgColor: "#00c0ef",
     bgColor: "#00c0ef20",
   });
-  $(function() {
-    $('.currency').maskMoney({
+  $(function () {
+    $(".currency").maskMoney({
       precision: 0,
-      thousands: '.'
+      thousands: ".",
     });
-  })
+  });
   // var element = document.getElementById('embed_paso1');
   // html2pdf(element);
-  $('.selec-multiple').select2({
-    tags: true
+  $(".selec-multiple").select2({
+    tags: true,
   });
-  $('#form-solicitud').on('submit', function (e) {
+  $("#form-solicitud").on("submit", function (e) {
     var notificacion_enviada = $("#notificacion_enviada").val();
     var validacion = $("#validacion").val();
     var linea = $("#linea").val();
@@ -28,8 +48,15 @@ $(document).ready(function () {
     var cuotas_desembolso = $("#cuotas_desembolso").val();
     var valor_cuota_desembolso = $("#valor_cuota_desembolso").val();
     if (notificacion_enviada == 0 && validacion == 7) {
-      if (linea != linea_desembolso || valor != valor_desembolso || cuotas != cuotas_desembolso || valor_cuota != valor_cuota_desembolso) {
-        var r = confirm("Se han modificado algunos valores de desembolso, se enviara una notificación al usuario. ¿desea continuar?");
+      if (
+        linea != linea_desembolso ||
+        valor != valor_desembolso ||
+        cuotas != cuotas_desembolso ||
+        valor_cuota != valor_cuota_desembolso
+      ) {
+        var r = confirm(
+          "Se han modificado algunos valores de desembolso, se enviara una notificación al usuario. ¿desea continuar?"
+        );
         if (r == false) {
           e.preventDefault();
         } else {
@@ -39,9 +66,6 @@ $(document).ready(function () {
         $("#confirm_user").val(0);
       }
     }
-
-
-
   });
 
   tinyMCE.init({
@@ -49,23 +73,27 @@ $(document).ready(function () {
     editor_selector: "tinyeditor",
     theme: "modern",
     color_picker_callback: function (callback, value) {
-      callback('#FF0000');
+      callback("#FF0000");
     },
-    block_formats: 'Parrafo=p;Titulo 1=h2;Titulo 2=h3;Titulo 3=h4;Titulo 4=h5',
+    block_formats: "Parrafo=p;Titulo 1=h2;Titulo 2=h3;Titulo 3=h4;Titulo 4=h5",
     language_url: "/scripts/tinymce/langs/es.js",
     language: "es",
-    plugins: "contextmenu,textcolor,colorpicker,link ,responsivefilemanager, table ,visualblocks,code,paste,image, charmap, print, preview, anchor,advlist,media, table, contextmenu, paste ",
+    plugins:
+      "contextmenu,textcolor,colorpicker,link ,responsivefilemanager, table ,visualblocks,code,paste,image, charmap, print, preview, anchor,advlist,media, table, contextmenu, paste ",
     external_filemanager_path: "/scripts/tinymce/plugins/filemanager/",
     filemanager_title: "Responsive Filemanager",
     external_plugins: {
-      "filemanager": "/scripts/tinymce/plugins/filemanager/plugin.min.js",
-      "responsivefilemanager": "/scripts/tinymce/plugins/responsivefilemanager/plugin.min.js"
+      filemanager: "/scripts/tinymce/plugins/filemanager/plugin.min.js",
+      responsivefilemanager:
+        "/scripts/tinymce/plugins/responsivefilemanager/plugin.min.js",
     },
     theme_modern_toolbar_location: "bottom",
     paste_auto_cleanup_on_paste: true,
 
-    fontsize_formats: '12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 36px 38px 40px 45px 50px 55px 60px 65px 70px 75px',
-    toolbar: "mybutton,|,formatselect,|,fontsizeselect,forecolor,|,bold,italic,underline,|,alignleft, aligncenter, alignright, alignjustify,bullist,numlist,|,link,unlink,image,media,responsivefilemanager,|,removeformat,code",
+    fontsize_formats:
+      "12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 36px 38px 40px 45px 50px 55px 60px 65px 70px 75px",
+    toolbar:
+      "mybutton,|,formatselect,|,fontsizeselect,forecolor,|,bold,italic,underline,|,alignleft, aligncenter, alignright, alignjustify,bullist,numlist,|,link,unlink,image,media,responsivefilemanager,|,removeformat,code",
     menubar: false,
     resize: true,
     browser_spellcheck: true,
@@ -75,36 +103,39 @@ $(document).ready(function () {
     image_advtab: true,
     style_formats: [
       {
-        title: 'Image Left', selector: 'img', styles: {
-          'float': 'left',
-          'margin': '0 10px 0 10px'
-        }
+        title: "Image Left",
+        selector: "img",
+        styles: {
+          float: "left",
+          margin: "0 10px 0 10px",
+        },
       },
       {
-        title: 'Image Right', selector: 'img', styles: {
-          'float': 'right',
-          'margin': '0 10px 0 10px'
-        }
-      }
+        title: "Image Right",
+        selector: "img",
+        styles: {
+          float: "right",
+          margin: "0 10px 0 10px",
+        },
+      },
     ],
     setup: function (editor) {
-      editor.on('init', function (e) {
-        editor.getDoc().body.style.fontSize = '16px';
+      editor.on("init", function (e) {
+        editor.getDoc().body.style.fontSize = "16px";
       });
-      editor.addButton('mybutton', {
-        type: 'listbox',
-        text: 'Tema Claro',
+      editor.addButton("mybutton", {
+        type: "listbox",
+        text: "Tema Claro",
         icon: false,
         onselect: function (e) {
           editor.getWin().document.body.style.backgroundColor = this.value();
         },
         values: [
-          { text: 'Tema Claro', value: "#FFFFFF" },
-          { text: 'Tema Oscuro', value: "#333333" },
-        ]
+          { text: "Tema Claro", value: "#FFFFFF" },
+          { text: "Tema Oscuro", value: "#333333" },
+        ],
       });
-
-    }
+    },
   });
   $(".file-image").fileinput({
     maxFileSize: 2048,
@@ -113,10 +144,10 @@ $(document).ready(function () {
     browseClass: "btn  btn-verde",
     showUpload: false,
     showRemove: false,
-    browseIcon: "<i class=\"fas fa-image\"></i> ",
+    browseIcon: '<i class="fas fa-image"></i> ',
     browseLabel: "Imagen",
     language: "es",
-    dropZoneEnabled: false
+    dropZoneEnabled: false,
   });
 
   $(".file-document").fileinput({
@@ -127,9 +158,9 @@ $(document).ready(function () {
     allowedFileExtensions: ["pdf", "jpg", "jpeg", "gif", "png", "xlsx"],
     showUpload: false,
     showRemove: false,
-    browseIcon: "<i class=\"fas fa-folder-open\"></i> ",
+    browseIcon: '<i class="fas fa-folder-open"></i> ',
     language: "es",
-    dropZoneEnabled: false
+    dropZoneEnabled: false,
   });
 
   $(".file-robot").fileinput({
@@ -140,10 +171,10 @@ $(document).ready(function () {
     showUpload: false,
     showRemove: false,
     browseLabel: "Robot",
-    browseIcon: "<i class=\"fas fa-robot\"></i> ",
+    browseIcon: '<i class="fas fa-robot"></i> ',
     language: "es",
     dropZoneEnabled: false,
-    showPreview: false
+    showPreview: false,
   });
 
   $(".file-sitemap").fileinput({
@@ -154,10 +185,10 @@ $(document).ready(function () {
     showUpload: false,
     showRemove: false,
     browseLabel: "SiteMap",
-    browseIcon: "<i class=\"fas fa-sitemap\"></i> ",
+    browseIcon: '<i class="fas fa-sitemap"></i> ',
     language: "es",
     dropZoneEnabled: false,
-    showPreview: false
+    showPreview: false,
   });
   $('[data-toggle="tooltip"]').tooltip();
   $(".up_table,.down_table").click(function () {
@@ -183,15 +214,14 @@ $(document).ready(function () {
     var route = $("#order-route").val();
     var csrf = $("#csrf").val();
     if (route != "") {
-      $.post(route, { 'csrf': csrf, 'id1': content1, 'id2': content2 });
+      $.post(route, { csrf: csrf, id1: content1, id2: content2 });
     }
   });
-
 
   $(".selectpagination").change(function () {
     var route = $("#page-route").val();
     var pages = $(this).val();
-    $.post(route, { 'pages': pages }, function () {
+    $.post(route, { pages: pages }, function () {
       location.reload();
     });
   });
@@ -205,11 +235,10 @@ $(document).ready(function () {
     }
     var editor = window.tinyMCE.get(contenedor);
     editor.getWin().document.body.style.backgroundColor = color;
-
   });
   $(".switch-form").bootstrapSwitch({
-    "onText": "Si",
-    "offText": "No"
+    onText: "Si",
+    offText: "No",
   });
 
   $("#contenido_tipo").on("change", function () {
@@ -253,21 +282,25 @@ $(document).ready(function () {
       $(".si-acordion").show();
     }
   });
-  $(".colorpicker").colorpicker({
-    onChange: function (e) {
+  $(".colorpicker")
+    .colorpicker({
+      onChange: function (e) {
+        console.log("entro");
+      },
+    })
+    .on("colorpickerChange colorpickerCreate", function (e) {
       console.log("entro");
-    }
-  }).on('colorpickerChange colorpickerCreate', function (e) {
-    console.log("entro");
-    // console.log( e.colorpicker.picker.parents('.input-group'));
-    //e.colorpicker.picker.parents('.input-group').find('input').css('background-color', e.value);
-  }).on('create', function (e) {
-    var val = $(this).val();
-    $(this).css({ backgroundColor: $(this).val() });
-  }).on('change', function (e) {
-    var val = $(this).val();
-    $(this).css({ backgroundColor: $(this).val() });
-  });
+      // console.log( e.colorpicker.picker.parents('.input-group'));
+      //e.colorpicker.picker.parents('.input-group').find('input').css('background-color', e.value);
+    })
+    .on("create", function (e) {
+      var val = $(this).val();
+      $(this).css({ backgroundColor: $(this).val() });
+    })
+    .on("change", function (e) {
+      var val = $(this).val();
+      $(this).css({ backgroundColor: $(this).val() });
+    });
 });
 
 function eliminarImagen(campo, ruta) {
@@ -275,16 +308,16 @@ function eliminarImagen(campo, ruta) {
   var csrf_section = $("#csrf_section").val();
   var id = $("#id").val();
   if (confirm("¿Esta seguro de borrar esta imagen?") == true) {
-    $.post(ruta, { "id": id, "csrf": csrf, "csrf_section": csrf_section, "campo": campo }, function (data) {
-      if (parseInt(data.elimino) == 1) {
-        $("#imagen_" + campo).hide();
+    $.post(
+      ruta,
+      { id: id, csrf: csrf, csrf_section: csrf_section, campo: campo },
+      function (data) {
+        if (parseInt(data.elimino) == 1) {
+          $("#imagen_" + campo).hide();
+        }
       }
-    });
-
+    );
   }
   return false;
 }
-function validarcambios() {
-
-
-}
+function validarcambios() {}

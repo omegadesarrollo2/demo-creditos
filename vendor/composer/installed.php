@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'carlosalbertorodriguezlaiton/framework',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '6785f2b0e05bcb3c1a14ada8ab3b26018ab74c37',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'carlosalbertorodriguezlaiton/framework' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '6785f2b0e05bcb3c1a14ada8ab3b26018ab74c37',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

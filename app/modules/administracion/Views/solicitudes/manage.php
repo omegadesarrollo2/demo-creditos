@@ -1,6 +1,9 @@
-<h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
+<h1 class="titulo-principal"><i class="fas fa-hand-holding-usd"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
-  <form id="form-solicitud" class="text-left" enctype="multipart/form-data" method="post"
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-warning btn-sm search-button mt-3 ml-auto" href="/administracion/solicitudes">Regresar<i class="fas fa-chevron-left"></i></a>
+  </div>
+  <form id="form-solicitud" class="text-left filters" enctype="multipart/form-data" method="post"
     action="<?php echo $this->routeform;?>" onsubmit="return validarcondiciones(this);">
     <div class="content-dashboard">
       <input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
@@ -13,13 +16,12 @@
       <input type="hidden" name="cuota_prima" id="cuota_prima" value="<?= $this->content->cuota_prima; ?>" />
       <input type="hidden" name="cuota_prima_desembolso" id="cuota_prima_desembolso"
         value="<?= $this->content->cuota_prima_desembolso; ?>" />
-
       <?php }?>
       <div class="row">
         <div class="col-12">
           <h4>Información de la solicitud</h4>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <label for="" class="control-label">Fecha de afiliación</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -29,7 +31,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <label for="" class="control-label">Meses desde la afiliación</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -39,7 +41,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <label for="" class="control-label">Fecha de ingreso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -49,7 +51,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <label for="" class="control-label">Meses desde el ingreso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -59,7 +61,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="linea" class="control-label">linea</label>
           <label class="input-group">
 
@@ -77,7 +79,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label class="control-label">destino</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -93,7 +95,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="valor" class="control-label">Valor solicitado</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -104,7 +106,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label for="monto_solicitado" class="control-label">monto solicitado</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -116,7 +118,7 @@
           <div class="help-block with-errors"></div>
         </div>
 
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="cuotas" class="control-label">cuotas</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -131,7 +133,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="valor_cuota" class="control-label">valor cuota</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -144,7 +146,7 @@
         </div>
 
 
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label class="control-label">Tipo de cuota extra</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -163,7 +165,7 @@
         </div>
 
 
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="cuotas_extra" class="control-label">cuotas extra</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -183,7 +185,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="valor_extra" class="control-label">valor cuotas extra</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -194,7 +196,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="tasa" class="control-label">tasa</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -210,7 +212,7 @@
           <h4>Información de desembolso</h4>
         </div>
 
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="valor_desembolso" class="control-label">valor desembolso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -222,7 +224,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label class="control-label">linea desembolso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -239,7 +241,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="cuotas_desembolso" class="control-label">cuotas desembolso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -256,7 +258,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="valor_cuota_desembolso" class="control-label">valor cuota desembolso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -268,7 +270,7 @@
           <div class="help-block with-errors"></div>
         </div>
         <input type="hidden" value="<?php echo $this->content->id ?>" name="solicitud" id="solicitud">
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="tasa_desembolso" class="control-label">tasa desembolso</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -279,7 +281,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="cuotas_extra_desembolso" class="control-label">Primas que compromete</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -299,7 +301,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="valor_extra_desembolso" class="control-label">Valor comprometido de primas</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -312,7 +314,7 @@
           <div class="help-block with-errors"></div>
         </div>
 
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="fecha" class="control-label">fecha</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -322,7 +324,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="recoger_credito" class="control-label">Recoge crédito</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -340,7 +342,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group ">
+        <div class="col-2 form-group ">
           <label for="valor_recogidos" class="control-label">valor recogido</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -352,7 +354,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label for="validacion" class="control-label">Estado de la solicitud</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -371,7 +373,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label for="radicacion" class="control-label">radicacion</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -388,7 +390,7 @@
         <div class="col-12"><br>
           <h4>Información del solicitante</h4>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label for="cedula" class="control-label">cedula</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -398,7 +400,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="nombres" class="control-label">nombres</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -408,7 +410,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="nombres2" class="control-label">nombres2</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -419,7 +421,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="apellido1" class="control-label">apellido1</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -430,7 +432,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="apellido2" class="control-label">apellido2</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -441,7 +443,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="sexo" class="control-label">sexo</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -451,7 +453,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="tipo_documento" class="control-label">tipo documento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -462,7 +464,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="documento" class="control-label">documento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -473,7 +475,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="fecha_documento" class="control-label">fecha documento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -486,7 +488,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="ciudad_documento" class="control-label">ciudad documento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -502,7 +504,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="fecha_nacimiento" class="control-label">fecha nacimiento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -515,7 +517,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="empresa" class="control-label">empresa</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -525,7 +527,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="dependencia" class="control-label">dependencia</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -536,7 +538,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-4 form-group">
+        <div class="col-2 form-group">
           <label for="direccion_oficina" class="control-label">direccion oficina</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -557,7 +559,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="ciudad_oficina" class="control-label">ciudad oficina</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -573,7 +575,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="telefono_oficina" class="control-label">telefono oficina</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -584,7 +586,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="celular" class="control-label">celular</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -594,7 +596,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-4 form-group">
+        <div class="col-2 form-group">
           <label for="direccion_residencia" class="control-label">direccion residencia</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -615,7 +617,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="barrio" class="control-label">barrio</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -625,7 +627,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="ciudad_residencia" class="control-label">ciudad residencia</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -641,7 +643,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="telefono" class="control-label">telefono</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -652,7 +654,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-4 form-group">
+        <div class="col-2 form-group">
           <label for="correo_empresarial" class="control-label">Correo personal</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -663,7 +665,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-4 form-group">
+        <div class="col-2 form-group">
           <label for="correo_personal" class="control-label">Correo alterno</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -734,7 +736,7 @@
         <div class="col-12"><br>
           <h4>Información estado de la solicitud</h4>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="tramite" class="control-label">tramite</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -744,7 +746,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label class="control-label">ejecutivo de cuenta</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -761,7 +763,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label class="control-label">Analista asignado</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -777,7 +779,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label class="control-label">Regional</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -793,7 +795,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="fecha_asignado" class="control-label">fecha asignado</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -804,7 +806,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="pagare" class="control-label">número de pagare</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -814,7 +816,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label class="control-label">quien</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -831,7 +833,7 @@
           <div class="help-block with-errors"></div>
         </div>
         <input type="hidden" name="fecha_estado" value="<?php echo $this->content->fecha_estado ?>">
-        <div class="col-3 form-group d-none">
+        <div class="col-2 form-group d-none">
           <label for="numero_obligacion" class="control-label">número obligación</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -843,7 +845,7 @@
           <div class="help-block with-errors"></div>
         </div>
 
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="capacidad_endeudamiento" class="control-label">capacidad de endeudamiento</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -857,7 +859,7 @@
 
         <input type="hidden" name="autorizo" value="<?php echo $this->content->autorizo ?>">
         <input type="hidden" name="fecha_autorizo" value="<?php echo $this->content->fecha_autorizo ?>">
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label class="control-label">Vo Bo Autorización</label>
           <label class="input-group">
             <div class="input-group-prepend">
@@ -1177,3 +1179,12 @@ function validarcondiciones(a) {
 
 }
 </script>
+
+
+<style>
+  h4{
+    color: #FFF;
+    background-color: #041d49;
+    padding: 10px;
+  }
+</style>

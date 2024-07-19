@@ -24,9 +24,9 @@ $config ['staging']['db']['engine'] ='mysql';
 $config ['development']= array();
 $config ['development']['db'] = array();
 $config ['development']['db']['host'] ='localhost';
-$config ['development']['db']['name'] ='demo_creditos';
+$config ['development']['db']['name'] ='fodun_creditos';
 $config ['development']['db']['user'] ='root';
-$config ['development']['db']['password'] = 'root';
+$config ['development']['db']['password'] = '';
 $config ['development']['db']['port'] ='3306';
 $config ['development']['db']['engine'] ='mysql';
 

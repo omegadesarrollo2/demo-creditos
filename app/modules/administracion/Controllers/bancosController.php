@@ -4,6 +4,7 @@
 */
 class Administracion_bancosController extends Administracion_mainController
 {
+  public $botonpanel = 15; 
 	/**
 	 * $mainModel  instancia del modelo de  base de datos bancos
 	 * @var modeloContenidos

@@ -4,6 +4,7 @@
 */
 class Administracion_Model_DbTable_Importarasociados extends Db_Table
 {
+
 	/**
 	 * [ nombre de la tabla actual]
 	 * @var string

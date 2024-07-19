@@ -642,3 +642,11 @@ $('body').on('keyup', '#campo_otro input', function() {
   $("#otro").val(this.value);
 });
 </script>
+
+<?php if($_GET['mod'] == 'detalle_solicitud'){ ?>
+  <style>
+    footer{
+      display: none;
+    }
+  </style>
+<?php } ?>

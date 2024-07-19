@@ -227,6 +227,17 @@ class Administracion_solicitudesController extends Administracion_mainController
       $fecha = substr($value->fecha, 0, 7);
       $value->recientes = $this->mainModel->getList(" cedula='$cedula' AND paso='8' ", "");
     }
+    $documentosadicionalesModel = new Administracion_Model_DbTable_Documentosadicionales();
+    foreach ($lists as $key => $value) {
+      $id = $value->id;
+      $value->documentos_adicionales = $documentosadicionalesModel->getList("solicitud='$id'", "");
+    }
+    $logestadoModel = new Administracion_Model_DbTable_Logestado();
+    $logestado = $logestadoModel->getList("solicitud=$id", "fecha ASC");
+    foreach ($lists as $key => $value) {
+      $id = $value->id;
+      $value->logestado = $logestadoModel->getList("solicitud=$id", "fecha ASC");
+    }
     $this->_view->lists = $lists;
 
     $this->_view->csrf_section = $this->_csrf_section;
@@ -236,6 +247,28 @@ class Administracion_solicitudesController extends Administracion_mainController
     $this->_view->list_estado_autorizo = $this->getEstadoautorizo();
     $this->_view->list_linea_desembolso = $this->getLineadesembolso();
     $this->_view->pagares_estado = $this->pagaresEstado();
+
+    $garantiasModel = new Administracion_Model_DbTable_Garantias();
+    $garantias = $garantiasModel->getList("", "");
+    $this->_view->garantias = $garantias;
+
+    
+    $acepto_condiciones = array();
+    $acepto_condiciones[1] = "Acepto cambio de condiciones";
+    $acepto_condiciones[2] = "Rechazo cambio de condiciones";
+    $this->_view->acepto_condiciones = $acepto_condiciones;
+
+    $this->_view->usuarios = $this->getAsignado();
+
+    $pagare = $solicitud->pagare;
+    $pagareModel = new Page_Model_DbTable_Pagaredeceval();
+    $existe_pagare = $pagareModel->getList(" pagare='$pagare' ", "");
+    $this->_view->existe_pagare = $existe_pagare[0];
+
+    $enviopagareModel = new Administracion_Model_DbTable_Enviopagare();
+    $envios = $enviopagareModel->getList(" envio_solicitud='$id' ", " envio_fecha ASC ");
+    $this->_view->envios = $envios;
+
     $pagareModel = new Page_Model_DbTable_Pagaredeceval();
     $pagare = count($pagareModel->getList("pagare='$id'", ""));
     $existe_pagare = false;
@@ -258,6 +291,8 @@ class Administracion_solicitudesController extends Administracion_mainController
         header('Location: /administracion/solicitudes/?i=' . $_SESSION["estado"] . '');
       }
     }
+
+
   }
 
 
@@ -882,7 +917,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       }
       if ($filters->fecha_asignado2 != '') {
         $filtros = $filtros . " AND fecha_asignado <= '" . $filters->fecha_asignado2 . "'";
-      }      
+      }
       if ($filters->pagare != '') {
         $filtros = $filtros . " AND pagare LIKE '%" . $filters->pagare . "%'";
       }
@@ -898,9 +933,9 @@ class Administracion_solicitudesController extends Administracion_mainController
       // if ($filters->ente_aprobador != '') {
       //   $filtros = $filtros . " AND comite.comite_tipo ='" . $filters->ente_aprobador . "'";
       // }
-      if($filters->ente_aprobador == 'Analista'){
+      if ($filters->ente_aprobador == 'Analista') {
         $filtros = $filtros . " AND (solicitudes.enviadoa = '' OR solicitudes.enviadoa IS NULL)";
-      }else if ($filters->ente_aprobador != '') {
+      } else if ($filters->ente_aprobador != '') {
         $filtros = $filtros . " AND enviadoa = '" . $filters->ente_aprobador . "'";
       }
       if ($filters->fecha_desembolso != '' && $filters->fecha_desembolso_final != '') {
@@ -916,8 +951,8 @@ class Administracion_solicitudesController extends Administracion_mainController
           }
           $filtros = $filtros . " AND validacion = '2'";
           $filtros = $filtros . " AND ( ";
-           foreach ($fechas as $key => $fecha) {
-            if($key != 0){
+          foreach ($fechas as $key => $fecha) {
+            if ($key != 0) {
               $filtros = $filtros . " OR ";
             }
             $filtros = $filtros . " fecha_desembolso LIKE '%" . $fecha . "%' ";
@@ -1017,6 +1052,12 @@ class Administracion_solicitudesController extends Administracion_mainController
     $this->_view->adicionales = $documentosadicionalesModel->getList(" solicitud='$id' ", "");
 
     $this->_view->score = $this->verificarAutorizacionAutomatica();
+
+    $garantias = $this->getGarantias();
+    $this->_view->garantia = $garantias[$solicitud->tipo_garantia];
+
+    $documentosModel = new Administracion_Model_DbTable_Documentos();
+    $this->_view->documentos = $documentosModel->getList(" solicitud='$solicitud->id' ", "")[0];
   }
 
   public function incompletaAction()
@@ -1524,7 +1565,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       $emailModel->getMail()->ClearAllRecipients();
       $emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
       $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+      $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
       $emailModel->getMail()->addAddress("" . $email);
 
       $emailModel->getMail()->Subject = $asunto;
@@ -1822,7 +1863,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       $emailModel->getMail()->ClearAllRecipients();
       //$emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
       $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+      $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
       //$emailModel->getMail()->addBCC("soporteomega@omegawebsystems.com");
       //$emailModel->getMail()->addBCC("cristianreyes84@gmail.com");
       if ($email != "") {
@@ -2068,17 +2109,17 @@ class Administracion_solicitudesController extends Administracion_mainController
     $this->_view->analista = $analista;
     $aprobador = $analista;
 
-    
-      $comiteModel = new Administracion_Model_DbTable_Comite();
-      $comites = $comiteModel->getList(" comite_solicitud_id='$id' AND comite_tipo='2' ","");
-      foreach ($comites as $key => $value) {
-        $user_id = $value->comite_user_id;
-        $aprobador = $userModel->getById($user_id);
-        $value->user_names = $aprobador->user_names;
-      }
 
-      $this->_view->comites = $comites;
-      
+    $comiteModel = new Administracion_Model_DbTable_Comite();
+    $comites = $comiteModel->getList(" comite_solicitud_id='$id' AND comite_tipo='2' ", "");
+    foreach ($comites as $key => $value) {
+      $user_id = $value->comite_user_id;
+      $aprobador = $userModel->getById($user_id);
+      $value->user_names = $aprobador->user_names;
+    }
+
+    $this->_view->comites = $comites;
+
 
 
     //tabla
@@ -2469,7 +2510,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       </tr>
       <tr>
         <td><strong>Analista </strong></td>
-        <td align="right">'.$analista->user_names.'</td>
+        <td align="right">' . $analista->user_names . '</td>
       </tr>
       <tr>
         <td><strong>Email</strong></td>
@@ -2773,36 +2814,36 @@ class Administracion_solicitudesController extends Administracion_mainController
 
       //validar info codeudor2
       // if ($codeudor2_list->cedula != "") {
-        // if ($codeudor2_list->tipo_documento == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->nombres == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->apellido1 == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->ciudad_residencia == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->ciudad_documento == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->fecha_nacimiento == "" or $codeudor2_list->fecha_nacimiento == "0" or $codeudor2_list->fecha_nacimiento == "0000-00-00") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->fecha_documento == "" or $codeudor2_list->fecha_documento == "0" or $codeudor2_list->fecha_documento == "0000-00-00") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->direccion_residencia == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->correo == "") {
-          // $error = 5;
-        // }
-        // if ($codeudor2_list->celular == "") {
-          // $error = 5;
-        // }
+      // if ($codeudor2_list->tipo_documento == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->nombres == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->apellido1 == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->ciudad_residencia == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->ciudad_documento == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->fecha_nacimiento == "" or $codeudor2_list->fecha_nacimiento == "0" or $codeudor2_list->fecha_nacimiento == "0000-00-00") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->fecha_documento == "" or $codeudor2_list->fecha_documento == "0" or $codeudor2_list->fecha_documento == "0000-00-00") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->direccion_residencia == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->correo == "") {
+      // $error = 5;
+      // }
+      // if ($codeudor2_list->celular == "") {
+      // $error = 5;
+      // }
       // }
 
       //VALIDAR SI YA EXISTE PAGARE
@@ -2880,7 +2921,7 @@ class Administracion_solicitudesController extends Administracion_mainController
         }
       }
       if ($error == 0 and $existe == 0) {
-        if($solicitud->estado_autorizo != '4'){
+        if ($solicitud->estado_autorizo != '4') {
           header("Location: /administracion/wspagares/creargirador/?id=" . $id);
         }
       }
@@ -3002,7 +3043,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       $emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
       $emailModel->getMail()->addBCC("soporteomega@omegawebsystems.com");
       $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+      $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
 
       if ($correo_personal != "") {
         $emailModel->getMail()->addAddress("" . $correo_personal);
@@ -3029,7 +3070,7 @@ class Administracion_solicitudesController extends Administracion_mainController
         $emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
         $emailModel->getMail()->addBCC("soporteomega@omegawebsystems.com");
         $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+        $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
 
         if ($correo_personal1 != "") {
           $emailModel->getMail()->addAddress("" . $correo_personal1);
@@ -3050,7 +3091,7 @@ class Administracion_solicitudesController extends Administracion_mainController
         $emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
         $emailModel->getMail()->addBCC("soporteomega@omegawebsystems.com");
         $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+        $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
 
 
         if ($correo_personal2 != "") {
@@ -3378,7 +3419,7 @@ class Administracion_solicitudesController extends Administracion_mainController
   {
     ini_set('max_execution_time', '300');
     ini_set('memory_limit', '512M');
-    
+
     $order = "solicitudes.id DESC";
     $filtro = " AND solicitudes.paso = '8' AND solicitudes.asignado!='' AND solicitudes.asignado!='0' ";
 
@@ -3431,7 +3472,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       $estado = "rechazadas_asociado";
       $filtro = "AND acepto_cambios='2' || vencimiento_aplazado=1 || vencimiento_aprobado=1 ";
     }
-    
+
     $fecha_asignado = $this->_getSanitizedParam('fecha_asignado');
     $fecha_asignado2 = $this->_getSanitizedParam('fecha_asignado2');
     if ($fecha_asignado != '') {
@@ -3439,7 +3480,7 @@ class Administracion_solicitudesController extends Administracion_mainController
     }
     if ($fecha_asignado2 != '') {
       $filtro = $filtro . " AND fecha_asignado <= '" . $fecha_asignado2 . "'";
-    }    
+    }
 
     if ($_GET['prueba'] == "1") {
       echo $filtro;
@@ -3491,7 +3532,7 @@ class Administracion_solicitudesController extends Administracion_mainController
     $excel = $this->_getSanitizedParam("excel");
 
     //$this->_view->estado = $this->getEstado();
-    
+
     //$this->_view->list_regional = $this->getRegional();
     //$this->_view->list_garantias = $this->getGarantias();   
 
@@ -3508,12 +3549,12 @@ class Administracion_solicitudesController extends Administracion_mainController
   public function getGarantias()
   {
     $garantiasModel = new Administracion_Model_DbTable_Garantias();
-    $garantias = $garantiasModel->getList("", " garantia_nombre ASC "); 
+    $garantias = $garantiasModel->getList("", " garantia_nombre ASC ");
     $array = array();
     foreach ($garantias as $key => $value) {
       $linea2[$value->garantia_id] = $value->garantia_nombre;
     }
-    return $linea2;    
+    return $linea2;
   }
   public function lineaDesembolso()
   {
@@ -3549,11 +3590,9 @@ class Administracion_solicitudesController extends Administracion_mainController
     $codeudorModel->borrar($id);
 
     if ($tipo_garantia) {
-
       //extract($_POST);
       if ($tipo_garantia == "2") {
         $this->_view->numero = $numero = str_pad($id, 6, "0", STR_PAD_LEFT);
-
 
         //codeudor1
         $data['solicitud'] = $id;
@@ -3569,12 +3608,8 @@ class Administracion_solicitudesController extends Administracion_mainController
 
         //envio codeudor
         $emailModel = new Core_Model_Mail();
-
         $asunto = "Notificación Codeudor - Solicitud de crédito WEB" . $numero . "";
-
-
         $codeudor = $codeudorModel->getList(" solicitud='$id' AND codeudor_numero='1' ", "")[0];
-
         $correo = $codeudor->correo;
         $correo_codificado = md5($codeudor->cedula);
         $nombres_codeudor = $codeudor->nombres . " " . $codeudor->nombres2 . " " . $codeudor->apellido1 . " " . $codeudor->apellido2;
@@ -3587,7 +3622,7 @@ class Administracion_solicitudesController extends Administracion_mainController
         $emailModel->getMail()->setFrom("notificaciones@fondtodos.com", "Notificaciones FONDTODOS");
         $emailModel->getMail()->addBCC("soporteomega@omegawebsystems.com");
         $emailModel->getMail()->addBCC("desarrollo2@omegawebsystems.com");
-    $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
+        $emailModel->getMail()->addBCC("notificaciones@fondtodos.com");
         $emailModel->getMail()->addAddress("" . $correo);
 
         $emailModel->getMail()->Subject = $asunto;
@@ -3600,7 +3635,8 @@ class Administracion_solicitudesController extends Administracion_mainController
       $solicitudModel->editField($id, "tipo_garantia", $tipo_garantia);
       $solicitudModel->editField($id, "garantia_adicional", $garantia_adicional);
     }
-    header("location: /administracion/solicitudes/solicitudgarantias/?solicitud=" . $id . "&envio=1");
+    // header("location: /administracion/solicitudes/solicitudgarantias/?solicitud=" . $id . "&envio=1");
+    header("location: /administracion/solicitudes/");
   }
 
   public function soatAction()
@@ -3696,7 +3732,8 @@ class Administracion_solicitudesController extends Administracion_mainController
     $solicitudModel->editField($id, "correo_personal", $correo_personal);
     $solicitudModel->editField($id, "correo_empresarial", $correo_empresarial);
 
-    header("location: /administracion/solicitudes/editarcorreo/?solicitud=" . $id . "&envio=1");
+    // header("location: /administracion/solicitudes/editarcorreo/?solicitud=" . $id . "&envio=1");
+    header("location: /administracion/solicitudes");
   }
   public function aprobargerenciaAction()
   {
@@ -4002,7 +4039,7 @@ class Administracion_solicitudesController extends Administracion_mainController
       $logestadoModel = new Administracion_Model_DbTable_Logestado();
       $data_log = array();
       $data_log['solicitud'] = $solicitud;
-      $data_log['estado'] = 'Mensaje enviado: '.$data->asunto_correo;
+      $data_log['estado'] = 'Mensaje enviado: ' . $data->asunto_correo;
       $data_log['usuario'] = Session::getInstance()->get('kt_login_id');
       $data_log['fecha'] = date('Y-m-d H:i:s');
       $data_log['observacion'] = $data->mensaje_correo;
@@ -4255,12 +4292,12 @@ class Administracion_solicitudesController extends Administracion_mainController
   public function documentosFirmadosAction()
   {
     $this->_view->solicitud = $solicitud = $this->_getSanitizedParam('id');
-    $pagare_url  = 'pagares/pagare_firmado_'. $solicitud .'.pdf';
-    $solicitud_url = 'pagares/solicitud_firmado_'. $solicitud .'.pdf';
-    if(file_exists(FILE_PATH . $pagare_url)){
+    $pagare_url  = 'pagares/pagare_firmado_' . $solicitud . '.pdf';
+    $solicitud_url = 'pagares/solicitud_firmado_' . $solicitud . '.pdf';
+    if (file_exists(FILE_PATH . $pagare_url)) {
       $this->_view->pagare_url = $pagare_url;
     }
-    if(file_exists(FILE_PATH . $solicitud_url)){
+    if (file_exists(FILE_PATH . $solicitud_url)) {
       $this->_view->solicitud_url = $solicitud_url;
     }
   }

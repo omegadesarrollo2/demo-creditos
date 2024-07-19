@@ -1,27 +1,33 @@
-<div class="container">
+<h1 class="titulo-principal"><i class="fas fa-hand-holding-usd"></i> Formato comité de crédito</h1>
+<div class="container py-4">
 	<div class="row">
 		<?php if($_GET['excel']==""){ ?>
-			<div class="col-12 text-right">
+			<div class="col-12 text-right d-none">
 				<br><br>
 				<a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&excel=1"><button type="button" class="btn btn-primary d-none">Exportar</button></a>
-				<a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&pdf=1"><button type="button" class="btn btn-primary">Exportar PDF</button></a>
+				<!-- <a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&pdf=1" style="text-decoration: none;"><button type="button" class="btn search-button">Exportar PDF <i class="far fa-file-pdf"></i></button></a> -->
 			</div>
 		<?php } ?>
 
-		<table width="100%" cellpadding="3" cellspacing="0" border="0">
-			<tr>
-				<td height="115" colspan="7"><div style="height: 115px;"><img src="http://creditosfondtodos.com.co/skins/page/images/logo.png"></div></td>
-			</tr>
-			<tr>
-				<td colspan="7">
-					<?php
-						$fecha = $this->comites[0]->comite_fecha;
-						$fecha = substr($fecha,0,10);
-					?>
-					Fecha: <?php echo $fecha ?>
-				</td>
-			</tr>
-		</table>
+    <div class="col-12">
+      <table width="100%" cellpadding="3" cellspacing="0" border="0">
+        <tr>
+          <td height="115" colspan="5"><div style="height: 115px;"><img src="http://creditosfondtodos.com.co/skins/page/images/logo.png"></div></td>
+          <td colspan="2">
+            <a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&pdf=1" style="text-decoration: none;"><button type="button" class="btn search-button">Exportar PDF <i class="far fa-file-pdf"></i></button></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <?php
+              $fecha = $this->comites[0]->comite_fecha;
+              $fecha = substr($fecha,0,10);
+            ?>
+            Fecha: <?php echo $fecha ?>
+          </td>
+        </tr>
+      </table>
+    </div>
 
 
 		<div class="col-12">
@@ -95,3 +101,15 @@
 		</div>
 	</div>
 </div>
+
+<style>
+  td{
+    text-transform: uppercase;
+  }
+  td strong{
+    text-transform: capitalize;
+  }
+  td strong:first-letter{
+    text-transform: capitalize;
+  }
+</style>

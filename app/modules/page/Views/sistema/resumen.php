@@ -56,3 +56,9 @@ if ($_GET['prueba'] == "1") {
     </form>
   </div>
 </div>
+
+<style>
+  footer{
+    display: none !important;
+  }
+</style>

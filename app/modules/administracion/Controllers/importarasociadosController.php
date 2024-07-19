@@ -4,6 +4,7 @@
 */
 class Administracion_importarasociadosController extends Administracion_mainController
 {
+  public $botonpanel = 9; 
 	/**
 	 * $mainModel  instancia del modelo de  base de datos importar asociados
 	 * @var modeloContenidos
@@ -135,6 +136,7 @@ class Administracion_importarasociadosController extends Administracion_mainCont
 			$this->getLayout()->setTitle($title);
 			$this->_view->titlesection = $title;
 		}
+    $this->_view->lists = $this->mainModel->getList("", "");
 	}
 
 	/**

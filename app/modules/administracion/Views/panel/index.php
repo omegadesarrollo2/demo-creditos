@@ -283,8 +283,22 @@
 		</div>
 	</div>
 </div>
-<br><br>
 
 <div class="d-none">
 	<iframe src="/administracion/listadosarlaft/actualizarnombres/?n=<?php echo microtime(); ?>"></iframe>
 </div>
+
+<div class="welcome-bg">
+  <img src="/skins/administracion/images/welcome-bg.jpg" alt="">
+</div>
+<style>
+  .welcome-bg{
+    height: calc(100vh - 100px);
+  }
+  .welcome-bg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+</style>

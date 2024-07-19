@@ -4,6 +4,7 @@
 */
 class Administracion_activarlineasController extends Administracion_mainController
 {
+  public $botonpanel = 24; 
 	/**
 	 * $mainModel  instancia del modelo de  base de datos Activar Lineas
 	 * @var modeloContenidos

@@ -177,6 +177,23 @@ class Administracion_documentosadicionalesController extends Administracion_main
 		$solicitud = $this->_getSanitizedParam("solicitud");
 		header('Location: '.$this->route.'?solicitud='.$solicitud.'');
 	}
+	public function insert2Action(){
+		$this->setLayout('blanco');
+    $data = $this->getData();
+    $uploadDocument =  new Core_Model_Upload_Document();
+    if($_FILES['archivo']['name'] != ''){
+      $data['archivo'] = $uploadDocument->upload("archivo");
+    }
+    $id = $this->mainModel->insert($data);
+    
+    $data['id']= $id;
+    $data['log_log'] = print_r($data,true);
+    $data['log_tipo'] = 'CREAR DOCUMENTOS ADICIONALES';
+    $logModel = new Administracion_Model_DbTable_Log();
+    $logModel->insert($data);
+		$solicitud = $this->_getSanitizedParam("solicitud");
+		header('Location: /administracion/solicitudes');
+	}
 
 	/**
      * Recibe un identificador  y Actualiza la informacion de un documentos adicionales  y redirecciona al listado de documentos adicionales.
@@ -238,6 +255,26 @@ class Administracion_documentosadicionalesController extends Administracion_main
 		}
 		$solicitud = $this->_getSanitizedParam("solicitud");
 		header('Location: '.$this->route.'?solicitud='.$solicitud.'');
+	}
+	public function delete2Action()
+	{
+		$this->setLayout('blanco');
+    $id =  $this->_getSanitizedParam("id");
+    if (isset($id) && $id > 0) {
+      $content = $this->mainModel->getById($id);
+      if (isset($content)) {
+        $uploadDocument =  new Core_Model_Upload_Document();
+        if (isset($content->archivo) && $content->archivo != '') {
+          $uploadDocument->delete($content->archivo);
+        }
+        $this->mainModel->deleteRegister($id);$data = (array)$content;
+        $data['log_log'] = print_r($data,true);
+        $data['log_tipo'] = 'BORRAR DOCUMENTOS ADICIONALES';
+        $logModel = new Administracion_Model_DbTable_Log();
+        $logModel->insert($data); }
+    }
+		$solicitud = $this->_getSanitizedParam("solicitud");
+		header('Location: /administracion/solicitudes');
 	}
 
 	/**

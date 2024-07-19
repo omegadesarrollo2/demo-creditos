@@ -4,6 +4,7 @@
 */
 class Administracion_gestoresController extends Administracion_mainController
 {
+  public $botonpanel = 14; 
 	/**
 	 * $mainModel  instancia del modelo de  base de datos gestores comerciales
 	 * @var modeloContenidos
