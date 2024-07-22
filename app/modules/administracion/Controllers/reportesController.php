@@ -292,21 +292,21 @@ class Administracion_reportesController extends Administracion_mainController
     $solicitudModel = new Administracion_Model_DbTable_Solicitudes();
 
     $f1 = " validacion = '2' ";
-    if($fecha_aprobacion_start!="" and $fecha_aprobacion_end!=""){
+    if ($fecha_aprobacion_start != "" and $fecha_aprobacion_end != "") {
       $f1 .= " AND (solicitudes.fecha_aprobacion >= '$fecha_aprobacion_start' AND solicitudes.fecha_aprobacion <= '$fecha_aprobacion_end') ";
     }
-    if($fecha_desembolso_start!="" and $fecha_desembolso_end!=""){
+    if ($fecha_desembolso_start != "" and $fecha_desembolso_end != "") {
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_desembolso_start' AND solicitudes.fecha_desembolso <= '$fecha_desembolso_end') ";
     }
-    if($fecha_asignado_start!="" and $fecha_asignado_end!=""){
+    if ($fecha_asignado_start != "" and $fecha_asignado_end != "") {
       $f1 .= " AND (solicitudes.fecha_asignado >= '$fecha_asignado_start' AND solicitudes.fecha_asignado <= '$fecha_asignado_end') ";
     }
-    if($fecha_asignado_start == "" and $fecha_asignado_end == ""	 and $fecha_aprobacion_start == "" and $fecha_aprobacion_end == "" and $fecha_desembolso_start == "" and $fecha_desembolso_end == ""){
+    if ($fecha_asignado_start == "" and $fecha_asignado_end == ""   and $fecha_aprobacion_start == "" and $fecha_aprobacion_end == "" and $fecha_desembolso_start == "" and $fecha_desembolso_end == "") {
       $fecha_1 = date("Y-m-d", strtotime("-1 month"));
       $fecha_2 = date("Y-m-d");
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_1' AND solicitudes.fecha_desembolso <= '$fecha_2') ";
     }
-    if($cleanfilter=="1"){
+    if ($cleanfilter == "1") {
       $fecha_1 = date("Y-m-d", strtotime("-1 month"));
       $fecha_2 = date("Y-m-d");
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_1' AND solicitudes.fecha_desembolso <= '$fecha_2') ";
@@ -335,21 +335,21 @@ class Administracion_reportesController extends Administracion_mainController
     $solicitudModel = new Administracion_Model_DbTable_Solicitudes();
 
     $f1 = " validacion = '2' ";
-    if($fecha_aprobacion_start!="" and $fecha_aprobacion_end!=""){
+    if ($fecha_aprobacion_start != "" and $fecha_aprobacion_end != "") {
       $f1 .= " AND (solicitudes.fecha_aprobacion >= '$fecha_aprobacion_start' AND solicitudes.fecha_aprobacion <= '$fecha_aprobacion_end') ";
     }
-    if($fecha_desembolso_start!="" and $fecha_desembolso_end!=""){
+    if ($fecha_desembolso_start != "" and $fecha_desembolso_end != "") {
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_desembolso_start' AND solicitudes.fecha_desembolso <= '$fecha_desembolso_end') ";
     }
-    if($fecha_asignado_start!="" and $fecha_asignado_end!=""){
+    if ($fecha_asignado_start != "" and $fecha_asignado_end != "") {
       $f1 .= " AND (solicitudes.fecha_asignado >= '$fecha_asignado_start' AND solicitudes.fecha_asignado <= '$fecha_asignado_end') ";
     }
-    if($fecha_asignado_start == "" and $fecha_asignado_end == ""	 and $fecha_aprobacion_start == "" and $fecha_aprobacion_end == "" and $fecha_desembolso_start == "" and $fecha_desembolso_end == ""){
+    if ($fecha_asignado_start == "" and $fecha_asignado_end == ""   and $fecha_aprobacion_start == "" and $fecha_aprobacion_end == "" and $fecha_desembolso_start == "" and $fecha_desembolso_end == "") {
       $fecha_1 = date("Y-m-d", strtotime("-1 month"));
       $fecha_2 = date("Y-m-d");
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_1' AND solicitudes.fecha_desembolso <= '$fecha_2') ";
     }
-    if($cleanfilter=="1"){
+    if ($cleanfilter == "1") {
       $fecha_1 = date("Y-m-d", strtotime("-1 month"));
       $fecha_2 = date("Y-m-d");
       $f1 .= " AND (solicitudes.fecha_desembolso >= '$fecha_1' AND solicitudes.fecha_desembolso <= '$fecha_2') ";
@@ -370,13 +370,13 @@ class Administracion_reportesController extends Administracion_mainController
         <tbody>
     ';
 
-    foreach($solicitudes as $s){
+    foreach ($solicitudes as $s) {
       $table .= '
         <tr>
-          <td>'.$s->id.'</td>
-          <td>'.$s->fecha_aprobado.'</td>
-          <td>'.$s->fecha_asignado.'</td>
-          <td>'.$s->fecha_desembolso.'</td>
+          <td>' . $s->id . '</td>
+          <td>' . $s->fecha_aprobado . '</td>
+          <td>' . $s->fecha_asignado . '</td>
+          <td>' . $s->fecha_desembolso . '</td>
         </tr>
       ';
     }
@@ -394,6 +394,238 @@ class Administracion_reportesController extends Administracion_mainController
     header("Pragma: no-cache");
     header("Expires: 0");
     echo $table;
+  }
 
+
+  // Funciones Ajax para gráficas
+
+  public function getSolicitudesEstadoAction()
+  {
+    $this->setLayout('blanco');
+    $fecha1 = $this->_getSanitizedParam("fecha1");
+    $fecha2 = $this->_getSanitizedParam("fecha2");
+
+    $solicitudesModel = new Administracion_Model_DbTable_Solicitudes();
+    $filters = '';
+
+    $data = array();
+    $data['labels'] = array("En estudio", "Aprobado", "Desembolsado", "Anulado", "Rechazado", "Incompletas", "Total");
+    
+    $datasets = array();
+    $percentages = array();
+    $mounts = array();
+    $total = 0;
+    
+    //En estudio 
+    $filters = " validacion = '0' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+    //Aprobado
+    $filters = " validacion = '1' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+    //Desembolsado
+    $filters = " validacion = '2' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+    //Anulado
+    $filters = " validacion = '3' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+    //Rechazado
+    $filters = " validacion = '4' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+    //Incompletas
+    $filters = " paso != '8' AND incompleta IS NOT NULL ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+
+    //Total
+    $filters = " 1=1 ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $datasets[] = $solicitudesModel->getCount($filters, "")[0]->total;
+    $mounts[] = $solicitudesModel->getMounts($filters, "")[0];
+
+    
+    $data['datasets'] = $datasets;
+    $data['mounts'] = $mounts;
+    $total = array_sum($datasets);
+    $percentages = array_map(function($value) use ($total) {
+      return round(($value / $total) * 100, 2);
+    }, $datasets);
+    $data['percentages'] = $percentages;
+
+
+    echo json_encode($data);
+  }
+  public function getSolicitudesLineaAction()
+  {
+    $this->setLayout('blanco');
+    $fecha1 = $this->_getSanitizedParam("fecha1");
+    $fecha2 = $this->_getSanitizedParam("fecha2");
+
+    $solicitudesModel = new Administracion_Model_DbTable_Solicitudes();
+    $lineasModel = new Administracion_Model_DbTable_Lineas();
+    $filters = '';
+
+    $data = array();
+    $data['labels'] = array();
+    $data['datasets'] = array();  
+    $data['mounts'] = array();
+    $data['percentages'] = array();
+    $total = 0;
+
+    $lineas = $lineasModel->getList(" activo='1' ", " nombre ASC ");
+    foreach ($lineas as $key => $linea) {
+      $linea_id = $linea->codigo;
+      $data['labels'][] = html_entity_decode($linea->nombre);
+      $filters = " linea = '$linea_id' ";
+      if ($fecha1 != "" and $fecha2 != "") {
+        $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+      }
+      $data['datasets'][] = $solicitudesModel->getCount($filters, "")[0]->total;
+      $data['mounts'][] = $solicitudesModel->getMounts($filters, "")[0];
+    }
+    $total = array_sum($data['datasets']);
+    $data['percentages'] = array_map(function($value) use ($total) {
+      return round(($value / $total) * 100, 2);
+    }, $data['datasets']);
+
+    echo json_encode($data);
+  }
+  public function getSolicitudesNoFinalizadasAction()
+  {
+    $this->setLayout('blanco');
+    $fecha1 = $this->_getSanitizedParam("fecha1");
+    $fecha2 = $this->_getSanitizedParam("fecha2");
+
+    $solicitudesModel = new Administracion_Model_DbTable_Solicitudes();
+    $filters = '';
+
+    $data = array();
+    $data['labels'] = array("1", "2", "3", "4", "5", "6");
+    $data['datasets'] = array();
+    $data['mounts'] = array();
+    $data['percentages'] = array();
+    $total = 0;
+
+    for ($i = 0; $i <= 6; $i++) {
+      $filters = " paso = '$i' ";
+      if ($fecha1 != "" and $fecha2 != "") {
+        $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+      }
+      $data['datasets'][] = $solicitudesModel->getCount($filters, "")[0]->total;
+      $data['mounts'][] = $solicitudesModel->getMounts($filters, "")[0];
+    }
+    $total = array_sum($data['datasets']);
+    foreach($data['labels'] as $key => $label){
+      $data['labels'][$key] = "Paso ".$label;
+    }
+    
+    $data['percentages'] = array_map(function($value) use ($total) {
+      if($total == 0) return 0;
+      return round(($value / $total) * 100, 2); 
+    }, $data['datasets']);
+
+
+    echo json_encode($data);
+  }
+  public function getSolicitudesGestionAction()
+  {
+    $this->setLayout('blanco');
+    $fecha1 = $this->_getSanitizedParam("fecha1");
+    $fecha2 = $this->_getSanitizedParam("fecha2");
+
+    $solicitudesModel = new Administracion_Model_DbTable_Solicitudes();
+    $filters = '';
+
+    $data = array();
+    $data['labels'] = array("Menos de 1 dia", "1 dia", "2 dias", "3 dias", "4 dias", "5 dias", "6 dias", "7 dias o mas");
+    $data['datasets'] = array();
+    $data['mounts'] = array();
+    $data['percentages'] = array();
+    $total = 0;
+
+    $filters = " paso = '8' AND validacion='2' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $solicitudes = $solicitudesModel->getList("$filters", "");
+    $categories = array("Menos de 1 dia", "1 dia", "2 dias", "3 dias", "4 dias", "5 dias", "6 dias", "7 dias o mas");
+    $datasets = array();
+    $mounts = array();
+    $total = 0;
+    foreach ($solicitudes as $key => $solicitud) {
+      $dif = $this->diferencia($solicitud->fecha_estado, $solicitud->fecha_asignado);
+      $categoria = $this->calcular_categoria($dif);
+      $datasets[$categoria]++;
+    }
+    $data['datasets'] = $datasets;
+    $total = array_sum($datasets);
+    $data['percentages'] = array_map(function($value) use ($total) {
+      return round(($value / $total) * 100, 2);
+    }, $datasets);
+
+    echo json_encode($data);
+  }
+  public function getSolicitudesAnalisisAction()
+  {
+    $this->setLayout('blanco');
+    $fecha1 = $this->_getSanitizedParam("fecha1");
+    $fecha2 = $this->_getSanitizedParam("fecha2");
+
+    $solicitudesModel = new Administracion_Model_DbTable_Solicitudes();
+    $usuariosModel = new Administracion_Model_DbTable_Usuario();
+    $filters = '';
+
+    $data = array();
+    $data['labels'] = array("Menos de 1 dia", "1 dia", "2 dias", "3 dias", "4 dias", "5 dias", "6 dias", "7 dias o mas");
+    $data['datasets'] = array();
+    $data['mounts'] = array();
+    $data['percentages'] = array();
+    $total = 0;
+
+    $filters = " paso = '8' AND validacion='2' ";
+    if ($fecha1 != "" and $fecha2 != "") {
+      $filters .= " AND (solicitudes.fecha_asignado >= '$fecha1' AND solicitudes.fecha_asignado <= '$fecha2') ";
+    }
+    $solicitudes = $solicitudesModel->getList("$filters", "");
+    $categories = array("Menos de 1 dia", "1 dia", "2 dias", "3 dias", "4 dias", "5 dias", "6 dias", "7 dias o mas");
+    $datasets = array();
+    $mounts = array();
+    $total = 0;
+    foreach ($solicitudes as $key => $solicitud) {
+      $dif = $this->diferencia($solicitud->fecha_estado, $solicitud->fecha_asignado);
+      $categoria = $this->calcular_categoria($dif);
+      $datasets[$categoria]++;
+    }
+    $data['datasets'] = $datasets;
+    $total = array_sum($datasets);
+    $data['percentages'] = array_map(function($value) use ($total) {
+      return round(($value / $total) * 100, 2);
+    }, $datasets);
+
+    echo json_encode($data);
   }
 }

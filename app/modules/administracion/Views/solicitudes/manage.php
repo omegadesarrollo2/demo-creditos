@@ -1,9 +1,9 @@
 <h1 class="titulo-principal"><i class="fas fa-hand-holding-usd"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
   <div class="d-flex justify-content-end">
-    <a class="btn btn-warning btn-sm search-button mt-3 ml-auto" href="/administracion/solicitudes">Regresar<i class="fas fa-chevron-left"></i></a>
+    <a class="btn btn-warning btn-sm search-button mt-3 ms-auto" href="/administracion/solicitudes">Regresar<i class="fas fa-chevron-left"></i></a>
   </div>
-  <form id="form-solicitud" class="text-left filters" enctype="multipart/form-data" method="post"
+  <form id="form-solicitud" class="text-start filters" enctype="multipart/form-data" method="post"
     action="<?php echo $this->routeform;?>" onsubmit="return validarcondiciones(this);">
     <div class="content-dashboard">
       <input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
@@ -27,7 +27,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
             </div>
-            <input type="text" value="<?= ($this->usuario->fecha_afiliacion); ?>" disabled>
+            <input type="text" value="<?= ($this->usuario->fecha_afiliacion); ?>" class="form-control" disabled>
           </label>
           <div class="help-block with-errors"></div>
         </div>
@@ -37,7 +37,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
             </div>
-            <input type="text" value="<?= ($this->mes_diff); ?>" disabled>
+            <input type="text" value="<?= ($this->mes_diff); ?>" class="form-control" disabled>
           </label>
           <div class="help-block with-errors"></div>
         </div>
@@ -47,7 +47,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
             </div>
-            <input type="text" value="<?= ($this->usuario->fecha_afiliacion_koba); ?>" disabled>
+            <input type="text" value="<?= ($this->usuario->fecha_afiliacion_koba); ?>" class="form-control" disabled>
           </label>
           <div class="help-block with-errors"></div>
         </div>
@@ -57,7 +57,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text input-icono  fondo-azul-claro "><i class="fas fa-pencil-alt"></i></span>
             </div>
-            <input type="text" value="<?= ($this->mes_diff_ingreso); ?>" disabled>
+            <input type="text" value="<?= ($this->mes_diff_ingreso); ?>" class="form-control" disabled>
           </label>
           <div class="help-block with-errors"></div>
         </div>
@@ -891,11 +891,11 @@
 <div class="entity-floats">
 <?php if($_SESSION['kt_login_level']=="1" or $_SESSION['kt_login_level']=="3" or $_SESSION['kt_login_level']=="8" or $_SESSION['kt_login_level']=="14" or $_SESSION['kt_login_level']=="15" or $_SESSION['kt_login_level']=="16"){ ?>
   <?php if($this->content->estado_autorizo=="1"){ ?>
-    <a class="btn btn-success btn-sm" href="<?php echo $this->route;?>/formatocomite/?id=<?php echo $this->content->id ?>" data-toggle="tooltip" data-placement="top" title="Formato aprobación comité de crédito" target="_blank"><i class="fas fa-users"></i></a>
-    <a class="btn btn-azul btn-sm" href="<?php echo $this->route;?>/formatocomiteespecial/?id=<?php echo $this->content->id ?>" data-toggle="tooltip" data-placement="top" title="Formato aprobación aprobación junta directiva" target="_blank"><i class="fas fa-users"></i></a>
-    <a class="btn btn-warning btn-sm" href="<?php echo $this->route;?>/formatogerencia/?id=<?php echo $this->content->id ?>" data-toggle="tooltip" data-placement="top" title="Formato aprobación gerencia" target="_blank"><i class="fas fa-user"></i></a>
+    <a class="btn btn-success btn-sm" href="<?php echo $this->route;?>/formatocomite/?id=<?php echo $this->content->id ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación comité de crédito" target="_blank"><i class="fas fa-users"></i></a>
+    <a class="btn btn-azul btn-sm" href="<?php echo $this->route;?>/formatocomiteespecial/?id=<?php echo $this->content->id ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación aprobación junta directiva" target="_blank"><i class="fas fa-users"></i></a>
+    <a class="btn btn-warning btn-sm" href="<?php echo $this->route;?>/formatogerencia/?id=<?php echo $this->content->id ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación gerencia" target="_blank"><i class="fas fa-user"></i></a>
     <?php if($this->content->quien_aprobo=="Analista"){ ?>
-      <a class="btn btn-success btn-sm" href="<?php echo $this->route;?>/formatoanalista/?id=<?php echo $this->content->id ?>" data-toggle="tooltip" data-placement="top" title="Formato aprobación analista" target="_blank"><i class="fas fa-user"></i></a>
+      <a class="btn btn-success btn-sm" href="<?php echo $this->route;?>/formatoanalista/?id=<?php echo $this->content->id ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación analista" target="_blank"><i class="fas fa-user"></i></a>
     <?php } ?>
   <?php } ?>
 <?php } ?>

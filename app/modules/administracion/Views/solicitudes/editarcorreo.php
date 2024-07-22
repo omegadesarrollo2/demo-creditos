@@ -55,7 +55,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <img src="/skins/page/images/logo.png" alt="" width=150px>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

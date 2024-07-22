@@ -87,6 +87,7 @@
 
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script src="/skins/administracion/js/main.js?v=1.1">
   </script>
@@ -110,7 +111,7 @@
     </div>
   </header>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="padding-right: 3px; padding-left: 3px;">
       <nav id="panel-botones">
         <?= $this->_data['panel_botones']; ?>
       </nav>

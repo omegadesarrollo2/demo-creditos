@@ -1,6 +1,6 @@
 <h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
-	<div class="col-12 text-right margin10"><button class="btn btn-warning btn-sm" onclick="$('#div_filtro').toggle();">Ver filtro</button> <a class="btn btn-success" href="/administracion/actascomite/">Regresar</a></div>
+	<div class="col-12 text-end margin10"><button class="btn btn-warning btn-sm" onclick="$('#div_filtro').toggle();">Ver filtro</button> <a class="btn btn-success" href="/administracion/actascomite/">Regresar</a></div>
 	<form action="<?php echo $this->route; ?>" method="post" id="div_filtro" style="display: none;">
         <div class="content-dashboard">
             <div class="row">
@@ -119,11 +119,11 @@
 	               </label>
 	            </div>
                 <div class="col-3">
-                    <label>&nbsp;</label>
+                    <label class="line-break">&nbsp;</label>
                     <button type="submit" class="btn btn-block btn-azul"> <i class="fas fa-filter"></i> Filtrar</button>
                 </div>
                 <div class="col-3">
-                    <label>&nbsp;</label>
+                    <label class="line-break">&nbsp;</label>
                     <a class="btn btn-block btn-azul-claro " href="<?php echo $this->route; ?>?id=<?php echo $this->id; ?>cleanfilter=1" > <i class="fas fa-eraser"></i> Limpiar Filtro</a>
                 </div>
             </div>
@@ -150,7 +150,7 @@
 	    				<td><?php echo $item->solicitud->nombres; ?> <?php echo $item->solicitud->nombres2; ?> <?php echo $item->solicitud->apellido1; ?> <?php echo $item->solicitud->apellido2; ?></td>
 	    				<td><?php echo $this->list_linea_desembolso[$item->solicitud->linea_desembolso]; ?></td>
 	    				<td>$<?php echo number_format($item->solicitud->valor); ?></td>
-	    				<td><a class="btn btn-rojo btn-sm" href="/administracion/actascomite/quitar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-toggle="tooltip" data-placement="top" title="Quitar del acta"><i class="fas fa-minus-square"></i></a></td>
+	    				<td><a class="btn btn-rojo btn-sm" href="/administracion/actascomite/quitar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Quitar del acta"><i class="fas fa-minus-square"></i></a></td>
 	    			</tr>
     			<?php endforeach ?>
     		</table>
@@ -219,7 +219,7 @@
 		    	<div class="col-5">
 		    		<div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
 		    	</div>
-		    	<div class="col-3 text-right">
+		    	<div class="col-3 text-end">
 		    		<div class="texto-paginas">Registros por pagina:</div>
 		    	</div>
 		    	<div class="col-1">
@@ -231,12 +231,12 @@
 		    		</select>
 		    	</div>
 		    	<div class="col-3 d-none">
-		    		<div class="text-right"><a class="btn btn-sm btn-success" href="<?php echo $this->route."\manage"; ?>"> <i class="fas fa-plus-square"></i> Crear Nuevo</a></div>
+		    		<div class="text-end"><a class="btn btn-sm btn-success" href="<?php echo $this->route."\manage"; ?>"> <i class="fas fa-plus-square"></i> Crear Nuevo</a></div>
 		    	</div>
 		    </div>
 	    </div>
 		<div class="content-table">
-		<table class=" table table-striped  table-hover table-administrator text-left">
+		<table class=" table table-striped  table-hover table-administrator text-start">
 			<thead>
 				<tr>
 					<td>ID</td>
@@ -271,26 +271,26 @@
 						<td><?= $this->list_estado_autorizo[$content->estado_autorizo];?>
 					</tr>
 					<tr>
-						<td colspan="12" class="text-right">
+						<td colspan="12" class="text-end">
 							<div>
-								<a class="btn btn-azul btn-sm" href="/administracion/actascomite/agregar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-toggle="tooltip" data-placement="top" title="Agregar al acta"><i class="fas fa-plus-square"></i></a>
-								<a class="btn btn-rojo btn-sm" href="/administracion/actascomite/quitar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-toggle="tooltip" data-placement="top" title="Quitar del acta"><i class="fas fa-minus-square"></i></a>
+								<a class="btn btn-azul btn-sm" href="/administracion/actascomite/agregar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Agregar al acta"><i class="fas fa-plus-square"></i></a>
+								<a class="btn btn-rojo btn-sm" href="/administracion/actascomite/quitar/?id=<?= $id ?>&acta=<?php echo $this->id; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Quitar del acta"><i class="fas fa-minus-square"></i></a>
 
 							</div>
 
 							<!-- Modal -->
-							<div class="modal fade text-left" id="modal<?= $id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade text-start" id="modal<?= $id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  	<div class="modal-dialog" role="document">
 							    	<div class="modal-content">
 							      		<div class="modal-header">
 							        		<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
-							        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        		<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							      	</div>
 							      	<div class="modal-body">
 							        	<div class="">¿Esta seguro de eliminar este registro?</div>
 							      	</div>
 								      <div class="modal-footer">
-								        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+								        	<button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
 								        	<a class="btn btn-danger" href="<?php echo $this->route;?>/delete?id=<?= $id ?>&csrf=<?= $this->csrf;?><?php echo ''; ?>" >Eliminar</a>
 								      </div>
 							    	</div>

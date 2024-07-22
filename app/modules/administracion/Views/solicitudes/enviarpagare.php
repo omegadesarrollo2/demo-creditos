@@ -14,7 +14,7 @@
 		<div class="col-12"><br></div>
     <?php if($this->send == '2'){ ?>
       <div class="col-12 text-center d-none">
-        <a class="btn btn-info btn-sm mt-2" href="/administracion/solicitudes/aprobar/?id=<?php echo $this->id ?>" data-toggle="tooltip" data-placement="top" title="reenviar pagaré">
+        <a class="btn btn-info btn-sm mt-2" href="/administracion/solicitudes/aprobar/?id=<?php echo $this->id ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="reenviar pagaré">
           Reenviar
           <i class="fas fa-file-signature"></i>
         </a>

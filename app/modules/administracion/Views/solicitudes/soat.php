@@ -1,6 +1,6 @@
 <h1 class="titulo-principal"><i class="fas fa-cogs"></i> Soat</h1>
 <div class="container-fluid">
-	<form class="text-left" enctype="multipart/form-data" method="post" action="/administracion/solicitudes/enviarsoat" data-toggle="validator">
+	<form class="text-start" enctype="multipart/form-data" method="post" action="/administracion/solicitudes/enviarsoat" data-bs-toggle="validator">
 		<div class="content-dashboard">
 			<input type="hidden" name="id" id="id" value="<?php echo $this->id ?>">
 			<div class="row">

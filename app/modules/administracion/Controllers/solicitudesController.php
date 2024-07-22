@@ -4262,14 +4262,14 @@ class Administracion_solicitudesController extends Administracion_mainController
             <div id="firma"></div>
 
             <div id="signatureShow" class="d-flex align-items-baseline">
-              <span class="mr-2 font-weight-bold">Firma: </span>
+              <span class="me-2 font-weight-bold">Firma: </span>
               <h4>
                 ' . $carta->firma . '
               </h4>
             </div>
 
-            <div class="fecha_firma mb-3 text-left">
-              <span class="font-weight-bold text-left">
+            <div class="fecha_firma mb-3 text-start">
+              <span class="font-weight-bold text-start">
                 Fecha: 
               </span>
               <span>

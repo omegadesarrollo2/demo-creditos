@@ -83,7 +83,7 @@ header{
             <div class="col-sm-12 col-md-12 form-group">
               <div class="col-sm-12 col-md-12 px-4">
                 <div class="row">
-                  <div class="col-md-12 no-padding text-left">
+                  <div class="col-md-12 no-padding text-start">
                     <label for="cedula">Usuario</label>
                     <div class="input-container">
                       <img src="/skins/page/images/user.png" alt="">
@@ -94,7 +94,7 @@ header{
               </div>
               <div class="col-sm-12 col-md-12 px-4">
                 <div class="row">
-                  <div class="col-md-12 no-padding text-left">
+                  <div class="col-md-12 no-padding text-start">
                     <label for="cedula">Contraseña</label>
                     <div class="input-container">
                       <img src="/skins/page/images/password.png" alt="">

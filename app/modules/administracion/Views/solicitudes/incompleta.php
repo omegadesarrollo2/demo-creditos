@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-12"><br></div>
-		<form class="text-left col-lg-10 offset-lg-1" enctype="multipart/form-data" method="post" action="/administracion/solicitudes/guardarincompleta" data-toggle="validator">
+		<form class="text-start col-lg-10 offset-lg-1" enctype="multipart/form-data" method="post" action="/administracion/solicitudes/guardarincompleta" data-bs-toggle="validator">
 			<div class="row">
 				<div class="col-12">
 					<label>Estado de la solicitud</label>

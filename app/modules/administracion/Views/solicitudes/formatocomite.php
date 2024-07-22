@@ -2,7 +2,7 @@
 <div class="container py-4">
 	<div class="row">
 		<?php if($_GET['excel']==""){ ?>
-			<div class="col-12 text-right d-none">
+			<div class="col-12 text-end d-none">
 				<br><br>
 				<a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&excel=1"><button type="button" class="btn btn-primary d-none">Exportar</button></a>
 				<!-- <a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&pdf=1" style="text-decoration: none;"><button type="button" class="btn search-button">Exportar PDF <i class="far fa-file-pdf"></i></button></a> -->
@@ -12,13 +12,13 @@
     <div class="col-12">
       <table width="100%" cellpadding="3" cellspacing="0" border="0">
         <tr>
-          <td height="115" colspan="5"><div style="height: 115px;"><img src="http://creditosfondtodos.com.co/skins/page/images/logo.png"></div></td>
-          <td colspan="2">
+          <td height="115" colspan="5" style="border-width: 0 !important;"><div style="height: 115px; border-width: 0 !important;"><img src="http://creditosfondtodos.com.co/skins/page/images/logo.png"></div></td>
+          <td colspan="2" style="border-width: 0 !important;">
             <a href="/administracion/solicitudes/formatocomite/?id=<?php echo $this->id; ?>&pdf=1" style="text-decoration: none;"><button type="button" class="btn search-button">Exportar PDF <i class="far fa-file-pdf"></i></button></a>
           </td>
         </tr>
         <tr>
-          <td colspan="7">
+          <td colspan="7"  style="border-width: 0 !important;">
             <?php
               $fecha = $this->comites[0]->comite_fecha;
               $fecha = substr($fecha,0,10);
@@ -111,5 +111,11 @@
   }
   td strong:first-letter{
     text-transform: capitalize;
+  }
+  table tbody td{
+    border-width: 1px !important;
+  }
+  table tbody th{
+    border-width: 1px !important;
   }
 </style>

@@ -8,7 +8,7 @@
       <a href="/administracion/solicitudes/detalle/?paso=1&id=<?php echo $_GET['id']; ?>&usuario=<?php echo $_GET['usuario']; ?>" class="btn btn-primary <?php if($_GET['paso'] == '1'){ echo 'active'; } ?>">Información del asociado</a>
       <a href="/administracion/solicitudes/solicitudpdf?id=<?php echo $_GET['id'] ?>&bootstrap=1" class="btn btn-primary ">Descargar solicitud de crédito</a>
       <!-- <a href="/administracion/solicitudes/detalle/?paso=4&id=<?php echo $_GET['id']; ?>&usuario=<?php echo $_GET['usuario']; ?>" class="btn btn-primary">Referencias</a>  -->
-      <a href="/administracion/solicitudes/detalle/?paso=5&id=<?php echo $_GET['id']; ?>&usuario=<?php echo $_GET['usuario']; ?>" class="btn btn-primary <?php if($_GET['paso'] == '5'){ echo 'active'; } ?>"  data-toggle="modal" data-target="#modalGarantias">Garantía</a>
+      <a href="/administracion/solicitudes/detalle/?paso=5&id=<?php echo $_GET['id']; ?>&usuario=<?php echo $_GET['usuario']; ?>" class="btn btn-primary <?php if($_GET['paso'] == '5'){ echo 'active'; } ?>"  data-bs-toggle="modal" data-bs-target="#modalGarantias">Garantía</a>
       <?php if($this->solicitud->linea == 'EDU' || $this->solicitud->linea == 'CC' || $this->solicitud->linea == 'CCC' || $this->solicitud->linea == 'VEH'){ ?>
         <a href="/administracion/solicitudes/detalle/?paso=carta&id=<?php echo $_GET['id']; ?>&usuario=<?php echo $_GET['usuario']; ?>" class="btn btn-primary <?php if($_GET['paso'] == 'carta'){ echo 'active'; } ?>">
           Carta de compromiso
@@ -180,11 +180,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body text-left">
+      <div class="modal-body text-start">
         <form action="/administracion/solicitudes/updatecorreos" class="row">
           <div class="col-12">
             <h4 class="comun-title">Garantías</h4>

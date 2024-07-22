@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<form enctype="multipart/form-data" method="post" action="<?php echo $this->routeform;?>" data-toggle="validator">
+	<form enctype="multipart/form-data" method="post" action="<?php echo $this->routeform;?>" data-bs-toggle="validator">
 		<input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
 		<input type="hidden" name="csrf_section" id="csrf_section" value="<?php echo $this->csrf_section ?>">
 		<?php if ($this->content->info_pagina_id) { ?>

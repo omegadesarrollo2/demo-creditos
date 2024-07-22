@@ -1,4 +1,17 @@
+document.addEventListener('DOMContentLoaded', function () {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+});
 $(document).ready(function () {
+  $('.btn-delete-documents').on('click', function(){
+    var modalParent = $(this).attr('data-om-parent')
+    var modal = $(this).attr('data-om-target')
+
+    $(`#${modal}`).modal('show')
+    // $(`#${modalParent}`).modal('hide')
+  })
   var panel = $("#panel-botones");
   var panelHeight = panel.outerHeight();
   var togglePoint = panelHeight * 0.1;

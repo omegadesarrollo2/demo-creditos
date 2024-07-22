@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<?php if($_GET['excel']==""){ ?>
-			<div class="col-12 text-right">
+			<div class="col-12 text-end">
 				<br><br>
 				<a href="/administracion/solicitudes/formatogerencia/?id=<?php echo $this->id; ?>&excel=1"><button type="button" class="btn btn-primary d-none">Exportar</button></a>
 				<a href="/administracion/solicitudes/formatogerencia/?id=<?php echo $this->id; ?>&pdf=1"><button type="button" class="btn btn-primary">Exportar PDF</button></a>

@@ -97,7 +97,7 @@
        style=" <?php echo $estilo; ?>">Rechazadas por el asociado</a> 
 
   </div>
-  <div class="col-lg-12 text-right margin10">
+  <div class="col-lg-12 text-end margin10">
     <button class="btn btn-warning btn-sm search-button" onclick="$('#div_filtro').toggle();">Ver filtro <i class="fas fa-search"></i></button>
   </div>
   <form
@@ -320,17 +320,17 @@
           </label>
         </div>
         <div class="col-2">
-          <label>&nbsp;</label>
+          <label class="line-break">&nbsp;</label>
           <a
             href="/administracion/solicitudes/exportar?excel=1&i=<?php echo $_GET["i"] ?>&incompletas=<?= $_GET['incompletas']; ?>&sin_terminar=<?= $_GET['sin_terminar']; ?>&confirmadas_asociado=<?= $_GET['confirmadas_asociado']; ?>&rechazadas_asociado=<?= $_GET['rechazadas_asociado']; ?>&fecha_asignado=<?php echo $this->getObjectVariable($this->filters, 'fecha_asignado') ?>&fecha_asignado2=<?php echo $this->getObjectVariable($this->filters, 'fecha_asignado2') ?>"
             class="btn btn-block btn-rosado"> <i class="fas fa-file-excel"></i> Exportar Excel</a>
         </div>
         <div class="col-lg-2">
-          <label>&nbsp;</label>
+          <label class="line-break">&nbsp;</label>
           <button type="submit" class="btn btn-block btn-azul"><i class="fas fa-filter"></i> Filtrar</button>
         </div>
         <div class="col-lg-2">
-          <label>&nbsp;</label>
+          <label class="line-break">&nbsp;</label>
           <a class="btn btn-block btn-azul-claro " href="<?php echo $this->route; ?>?cleanfilter=1"> <i
               class="fas fa-eraser"></i> Limpiar Filtro</a>
         </div>
@@ -374,7 +374,7 @@
         <div class="col-lg-5">
           <div class="titulo-registro">Se encontraron <?php echo $this->register_number; ?> Registros</div>
         </div>
-        <div class="col-lg-3 text-right ml-auto">
+        <div class="col-lg-3 text-end ms-auto">
           <div class="texto-paginas">Registros por pagina:</div>
         </div>
         <div class="col-lg-1">
@@ -398,13 +398,13 @@
           </select>
         </div>
         <div class="col-lg-3 d-none">
-          <div class="text-right"><a class="btn btn-sm btn-success" href="<?php echo $this->route . "\manage"; ?>"> <i
+          <div class="text-end"><a class="btn btn-sm btn-success" href="<?php echo $this->route . "\manage"; ?>"> <i
                 class="fas fa-plus-square"></i> Crear Nuevo</a></div>
         </div>
       </div>
     </div>
     <div class="content-table">
-      <table class=" table table-striped  table-hover table-administrator text-left">
+      <table class=" table table-striped  table-hover table-administrator text-start">
         <thead>
         <tr>
           <td>ID</td>
@@ -499,30 +499,32 @@
             <td><?= $this->list_estado_autorizo[$content->estado_autorizo]; ?></td>
           </tr>
           <tr>
-          <td colspan="13" class="text-right">
+          <td colspan="13" class="text-end">
           <div class="buttons-row">
           <div>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "8") { ?>
               <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/manage?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pen-alt"></i></a>
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar"><i class="fas fa-pen-alt"></i></a>
             <?php } ?>
 
             <a class="btn btn-morado btn-sm" href="<?php echo $this->route; ?>/documentosFirmados?id=<?= $id ?>"
-               data-toggle="tooltip" data-placement="top" title="Documentos firmados"><i
+               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Documentos firmados"><i
                 class="fas fa-signature"></i></a>
 
             <?php if ($_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16") { ?>
-              <button class="btn btn-verde btn-sm" data-placement="top" title="Editar Correos" data-toggle="modal" data-target="#emails_model_<?php echo $content->id ?>"><i class="fas fa-at"></i></button>
+              <button class="btn btn-verde btn-sm" data-placement="top" title="Editar Correos" data-bs-toggle="modal" data-bs-target="#emails_model_<?php echo $content->id ?>">
+                <i class="fas fa-at" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar correos"></i>
+              </button>
                  <div class="modal fade modal-correos" id="emails_model_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body text-left">
+                        <div class="modal-body text-start">
                           <form action="/administracion/solicitudes/updatecorreos" class="row">
                             <div class="col-12">
                               <h4 class="comun-title">Editar correos</h4>
@@ -539,8 +541,8 @@
                               <label for="">Correo Empresarial </label>
                               <input type="email" name="correo_empresarial" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $content->correo_empresarial ?>">
                             </div>
-                            <div class="col-12 d-flex justify-content-center">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <div class="col-12 d-flex justify-content-center mt-2">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                               <button type="submit" class="btn btn-success">Guardar</button>
                             </div>
                           </form>
@@ -551,11 +553,11 @@
             <?php } ?>
 
             <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/detalle/?id=<?= $id ?>"
-               data-toggle="tooltip" data-placement="top" title="Detalle"><i class="fas fa-search"></i></a>
+               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detalle"><i class="fas fa-search"></i></a>
 
             <?php if ($_SESSION['kt_login_level'] == "3" || $_SESSION['kt_login_id'] == "1" or $_SESSION['kt_login_level'] == "16") { ?>
               <?php if ($content->validacion == "0" || $content->validacion == "" || $content->id == 454 || $_SESSION['kt_login_id'] == "18") { ?>
-                <span data-toggle="tooltip" data-placement="top" title="Aprobar"><a class="btn btn-success btn-sm"
+                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aprobar"><a class="btn btn-success btn-sm"
                                                                                     href="/administracion/solicitudes/aprobaranalista?id=<?php echo $content->id ?>"><i
                       class="fas fa-check-circle text-white"></i></a></span>
 
@@ -566,7 +568,7 @@
                 <span
                   class="<?php if ($_SESSION['kt_login_level'] == "8" && $content->enviadoa == 'Comite de credito') {
                     echo 'd-none';
-                  } ?>" data-toggle="tooltip" data-placement="top" title="Aprobar"><a class="btn btn-success btn-sm"
+                  } ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aprobar"><a class="btn btn-success btn-sm"
                                                                                       href="/administracion/solicitudes/aprobargerencia?id=<?php echo $content->id ?>"><i
                       class="fas fa-check-circle text-white"></i></a></span>
 
@@ -574,21 +576,21 @@
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
-              <a class="btn btn-rojo btn-sm" data-toggle="modal" data-target="#documents_modal_<?php echo $content->id ?>">
-                <i class="fas fa-file" data-toggle="tooltip" data-placement="top" title="Documentos adicionales"></i>
+              <a class="btn btn-rojo btn-sm" data-bs-toggle="modal" data-bs-target="#documents_modal_<?php echo $content->id ?>">
+                <i class="fas fa-file" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Documentos adicionales"></i>
               </a>
               <!-- <a class="btn btn-rojo btn-sm" href="/administracion/documentosadicionales/?solicitud=<?= $id ?>">
-                <i class="fas fa-file" data-toggle="tooltip" data-placement="top" title="Documentos adicionales"></i>
+                <i class="fas fa-file" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Documentos adicionales"></i>
               </a> -->
                 <div class="modal fade modal-correos" id="documents_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body text-left">
+                      <div class="modal-body text-start">
                         <form action="/administracion/documentosadicionales/insert2" class="row" method="post" enctype="multipart/form-data">
                           <div class="col-12">
                             <h4 class="comun-title">Documentos adicionales</h4>
@@ -614,7 +616,7 @@
                           <input type="hidden" name="quien" value="<?php echo $_SESSION['kt_login_id']; ?>">
                           <input type="hidden" name="solicitud" value="<?php echo $content->id ?>">
                           <div class="col-12 d-flex justify-content-center mt-2">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success">Guardar</button>
                           </div>
                         </form>
@@ -643,17 +645,17 @@
                                   </div>
                                   <div class="col-4 col d-flex justify-content-end">
                                     <div>
-                                      <span data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                        <a class="btn btn-rojo btn-sm" data-toggle="modal" data-target="#modal_adicionales<?= $id_adicionales ?>"><i class="fas fa-trash-alt"></i></a>
+                                      <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar">
+                                        <a class="btn btn-rojo btn-sm btn-delete-documents" data-om-target="modal_adicionales<?= $id_adicionales ?>" data-om-parent="documents_modal_<?php echo $content->id ?>"><i class="fas fa-trash-alt"></i></a>
                                       </span>
                                     </div>
                                     <!-- Modal -->
-                                    <div class="modal fade text-left" id="modal_adicionales<?= $id_adicionales ?>" tabindex="-1" role="dialog"
+                                    <div class="modal fade text-start" id="modal_adicionales<?= $id_adicionales ?>" tabindex="-1" role="dialog"
                                       aria-labelledby="myModalLabel">
                                       <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                           <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
                                           </div>
                                           <div class="modal-body">
@@ -661,7 +663,7 @@
                                             <div class="">¿Esta seguro de eliminar este registro?</div>
                                           </div>
                                           <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
                                             <a class="btn btn-danger"
                                               href="/administracion/documentosadicionales/delete2?id=<?= $id_adicionales ?>">Eliminar</a>
                                           </div>
@@ -681,21 +683,21 @@
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "16") { ?>
-              <!-- <a class="btn btn-azul-claro btn-sm" href="/administracion/solicitudes/solicitudgarantias/?solicitud=<?= $id ?>" data-toggle="modal" data-target="garantias_modal_<?php echo $content->id ?>">
-                <i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="Garantias"></i>
+              <!-- <a class="btn btn-azul-claro btn-sm" href="/administracion/solicitudes/solicitudgarantias/?solicitud=<?= $id ?>" data-bs-toggle="modal" data-bs-target="garantias_modal_<?php echo $content->id ?>">
+                <i class="fas fa-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Garantias"></i>
               </a> -->
-              <a class="btn btn-azul-claro btn-sm" data-toggle="modal" data-target="#garantias_modal_<?php echo $content->id ?>">
-                <i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="Garantias"></i>
+              <a class="btn btn-azul-claro btn-sm" data-bs-toggle="modal" data-bs-target="#garantias_modal_<?php echo $content->id ?>">
+                <i class="fas fa-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Garantias"></i>
               </a>
                 <div class="modal fade modal-correos" id="garantias_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body text-left">
+                      <div class="modal-body text-start">
                         <form action="/administracion/solicitudes/updategarantia" method="post" class="row">
                           <div class="col-12">
                             <h4 class="comun-title">Editar Garantías</h4>
@@ -723,7 +725,7 @@
                             </select>
                           </div>
                           <div class="col-12 d-flex justify-content-center">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success">Guardar</button>
                           </div>
                         </form>
@@ -735,7 +737,7 @@
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "4" or $_SESSION['kt_login_level'] == "9" or $_SESSION['kt_login_level'] == "16") { ?>
               <a class="btn btn-verde btn-sm" href="<?php echo $this->route; ?>/incompleta/?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Incompleta / Rechazada"><i
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Incompleta / Rechazada"><i
                   class="fas fa-exclamation-triangle"></i></a>
             <?php } ?>
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16") { ?>
@@ -745,7 +747,7 @@
                   echo "btn-warning";
                 } else {
                   echo "btn-success";
-                } ?> btn-sm" href="<?php echo $this->route; ?>/correoaprobacion/?id=<?= $id ?>" data-toggle="tooltip"
+                } ?> btn-sm" href="<?php echo $this->route; ?>/correoaprobacion/?id=<?= $id ?>" data-bs-toggle="tooltip"
                    data-placement="top" title="Enviar correo de aprobación"><?php if ($content->recoger_credito == 1) {
                     echo "R ";
                   } ?><i class="fas fa-envelope"></i></a>
@@ -755,7 +757,7 @@
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15") { ?>
               <?php if ($content->notificacion_enviada == "1") { ?>
                 <a class="btn btn-morado btn-sm"
-                   href="<?php echo $this->route; ?>/reenviarcambiocondiciones/?id=<?= $id ?>" data-toggle="tooltip"
+                   href="<?php echo $this->route; ?>/reenviarcambiocondiciones/?id=<?= $id ?>" data-bs-toggle="tooltip"
                    data-placement="top" title="reennviar cambio condiciones"><i class="fas fa-envelope"></i></a>
               <?php } else { ?>
 
@@ -765,7 +767,7 @@
               <?php if ($content->validacion == "1" || $content->validacion == "2" or $_SESSION['kt_login_level'] == "16") { ?>
                 <?php if ($_GET['i'] != 2) { ?>
                   <a class="btn btn-morado btn-sm" href="<?php echo $this->route; ?>/pasardesembolso/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Pasar a Desembolso"><i
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pasar a Desembolso"><i
                       class="fas fa-forward"></i></a>
                 <?php } ?>
               <?php } ?>
@@ -773,27 +775,27 @@
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "16") { ?>
               <?php if ($content->validacion == "8") { ?>
                 <a class="btn btn-azul-claro btn-sm d-none" href="<?php echo $this->route; ?>/desembolso/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Desembolsar"><i class="fas fa-forward"></i></a>
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Desembolsar"><i class="fas fa-forward"></i></a>
                 <a class="btn btn-morado btn-sm" onclick="confirmar_desembolso2('<?= $id; ?>');"
-                   style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="Desembolsar"><i
+                   style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Desembolsar"><i
                     class="fas fa-forward"></i></a>
               <?php } ?>
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "14" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "16" or $_SESSION['kt_login_level'] == "17" or $_SESSION['kt_login_level'] == "18") { ?>
 
-              <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/historialestados/?id=<?= $id ?>" data-toggle="modal" data-target="#historial_modal_<?php echo $content->id ?>">
-                <i class="fa fa-file" data-toggle="tooltip" data-placement="top" title="Historial de estados"></i>
+              <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/historialestados/?id=<?= $id ?>" data-bs-toggle="modal" data-bs-target="#historial_modal_<?php echo $content->id ?>">
+                <i class="fa fa-file" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Historial de estados"></i>
               </a>
                  <div class="modal fade modal-correos" id="historial_modal_<?php echo $content->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body text-left">
+                      <div class="modal-body text-start">
                         <form action="/administracion/solicitudes/updategarantia" method="post" class="row">
                           <div class="col-12">
                             <h4 class="comun-title">Historial de estados</h4>
@@ -911,7 +913,7 @@
                           <?php }?>
                           </div>
                           <div class="col-12 d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <!-- <button type="submit" class="btn btn-success">Guardar</button> -->
                           </div>
                         </form>
@@ -924,28 +926,28 @@
             <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "8" or $_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "16") { ?>
               <?php if ($content->linea_desembolso == "SO") { ?>
                 <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/soat/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Archivo soat"><i class="fas fa-car"></i></a>
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Archivo soat"><i class="fas fa-car"></i></a>
               <?php } ?>
             <?php } ?>
 
             <!-- Boton comunicacion con el asociado -->
             <?php if (Session::getInstance()->get('kt_login_level') == '1' or Session::getInstance()->get('kt_login_level') == '3' or $_SESSION['kt_login_level'] == "16") { ?>
               <a class="btn btn-warning text-white btn-sm" href="<?php echo $this->route; ?>/message?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Comunicación con el asociado">
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Comunicación con el asociado">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
               </a>
             <?php } ?>
             <?php if (Session::getInstance()->get('kt_login_level') == '1' or Session::getInstance()->get('kt_login_level') == '3' or $_SESSION['kt_login_level'] == "16") { ?>
               <a class="btn btn-info text-white btn-sm" href="<?php echo $this->route; ?>/plan?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Enviar plan de pagos">
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enviar plan de pagos">
                 <i class="fas fa-file-alt"></i>
               </a>
             <?php } ?>
 
             <?php if ($_SESSION['kt_login_level'] == "1") { ?>
-              <span data-toggle="tooltip" data-placement="top" title="Eliminar"><a class="btn btn-rojo btn-sm"
-                                                                                   data-toggle="modal"
-                                                                                   data-target="#modal<?= $id ?>"><i
+              <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar"><a class="btn btn-rojo btn-sm"
+                                                                                   data-bs-toggle="modal"
+                                                                                   data-bs-target="#modal<?= $id ?>"><i
                     class="fas fa-trash-alt"></i></a></span>
             <?php } ?>
           </div>
@@ -955,17 +957,17 @@
           <?php if ($_SESSION['kt_login_level'] == "13" or $_SESSION['kt_login_level'] == "12") { ?>
             <?php if ($content->estado_autorizo == "1") { ?>
               <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatocomite/?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Formato aprobación comité de crédito"
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación comité de crédito"
                  target="_blank"><i class="fas fa-users"></i></a>
               <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/formatocomiteespecial/?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Formato aprobación aprobación junta directiva"
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación aprobación junta directiva"
                  target="_blank"><i class="fas fa-users"></i></a>
               <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/formatogerencia/?id=<?= $id ?>"
-                 data-toggle="tooltip" data-placement="top" title="Formato aprobación gerencia" target="_blank"><i
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación gerencia" target="_blank"><i
                   class="fas fa-user"></i></a>
               <?php if ($content->quien_aprobo == "Analista") { ?>
                 <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatoanalista/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación analista" target="_blank"><i
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación analista" target="_blank"><i
                     class="fas fa-user"></i></a>
               <?php } ?>
             <?php } ?>
@@ -978,11 +980,11 @@
                   <?php if ($_SESSION['kt_login_level'] == "1" or $_SESSION['kt_login_level'] == "3" or $_SESSION['kt_login_level'] == "15" or $_SESSION['kt_login_level'] == "14") { ?>
                     <?php if ($this->pagares_estado[$content->pagare] == "") { ?>
                       <a class="btn btn-verde btn-sm" href="<?php echo $this->route; ?>/aprobar/?id=<?= $id ?>"
-                         data-toggle="tooltip" data-placement="top" title="Generar pagaré"><i
+                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Generar pagaré"><i
                           class="fas fa-file-signature"></i></a>
                     <?php } else if ($this->pagares_estado[$content->pagare] == 0) { ?>
                       <a class="btn btn-info btn-sm mt-2" href="<?php echo $this->route; ?>/aprobar/?id=<?= $id ?>"
-                         data-toggle="tooltip" data-placement="top" title="reenviar pagaré"><i
+                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="reenviar pagaré"><i
                           class="fas fa-file-signature"></i></a>
                     <?php } ?>
 
@@ -990,7 +992,7 @@
                 <?php } else { ?>
 
                   <a class="btn btn-warning btn-sm mt-2" href="<?php echo $this->route; ?>/detallepagare/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Pagaré"><i class="fas fa-file-signature"></i></a>
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pagaré"><i class="fas fa-file-signature"></i></a>
                 <?php } ?>
               <?php } ?>
             <?php } ?>
@@ -1003,40 +1005,40 @@
             <?php } ?>
 
             <!-- Modal -->
-            <div class="modal fade text-left" id="modal<?= $id ?>" tabindex="-1" role="dialog"
+            <div class="modal fade text-start" id="modal<?= $id ?>" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                   </div>
                   <div class="modal-body">
                     <div class="">¿Esta seguro de eliminar este registro?</div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
                     <a class="btn btn-danger"
                        href="<?php echo $this->route; ?>/delete?id=<?= $id ?>&csrf=<?= $this->csrf; ?><?php echo ''; ?>">Eliminar</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="modal fade text-left" id="aprobar<?= $id ?>" tabindex="-1" role="dialog"
+            <div class="modal fade text-start" id="aprobar<?= $id ?>" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Aprobar Solicitud</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                   </div>
                   <div class="modal-body">
                     <div class="">¿Esta seguro de aprobar esta solicitud?</div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <a class="btn btn-success" href="<?php echo $this->route; ?>/aprobarsolicitud/?id=<?= $id ?>">Aprobar</a>
                   </div>
                 </div>
@@ -1049,36 +1051,36 @@
 
                 <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
                   <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/enviaracomite/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a comité de crédito"><i
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enviar a comité de crédito"><i
                       class="fas fa-users"></i></a>
                 <?php } ?>
 
                 <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatocomite/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación comité de crédito"
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación comité de crédito"
                    target="_blank"><i class="fas fa-users"></i></a>
 
                 <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
                   <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/enviaracomiteespecial/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a junta directiva"><i
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enviar a junta directiva"><i
                       class="fas fa-users"></i></a>
                 <?php } ?>
                 <a class="btn btn-azul btn-sm" href="<?php echo $this->route; ?>/formatocomiteespecial/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación junta directiva"
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación junta directiva"
                    target="_blank"><i class="fas fa-users"></i></a>
 
                 <?php if (Session::getInstance()->get('kt_login_level') != '14' && Session::getInstance()->get('kt_login_level') != '15' && Session::getInstance()->get('kt_login_level') != '17' && Session::getInstance()->get('kt_login_level') != '18') { ?>
                   <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/enviaragerencia/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Enviar a gerencia"><i
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enviar a gerencia"><i
                       class="fas fa-user"></i></a>
                 <?php } ?>
 
                 <a class="btn btn-warning btn-sm" href="<?php echo $this->route; ?>/formatogerencia/?id=<?= $id ?>"
-                   data-toggle="tooltip" data-placement="top" title="Formato aprobación gerencia" target="_blank"><i
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación gerencia" target="_blank"><i
                     class="fas fa-user"></i></a>
 
                 <?php if ($content->quien_aprobo == "Analista") { ?>
                   <a class="btn btn-success btn-sm" href="<?php echo $this->route; ?>/formatoanalista/?id=<?= $id ?>"
-                     data-toggle="tooltip" data-placement="top" title="Formato aprobación analista" target="_blank"><i
+                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Formato aprobación analista" target="_blank"><i
                       class="fas fa-user"></i></a>
                 <?php } ?>
 

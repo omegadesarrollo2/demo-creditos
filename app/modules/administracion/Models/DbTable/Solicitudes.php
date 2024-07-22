@@ -278,8 +278,8 @@ class Administracion_Model_DbTable_Solicitudes extends Db_Table
         if($order != ''){
             $orders = ' ORDER BY '.$order;
         }
-        $select = 'SELECT COUNT(*) AS total, SUM(valor) AS total2 FROM '.$this->_name.' '.$filter.' '.$orders;
-        //echo $select."<br>";
+        echo $select = 'SELECT COUNT(*) AS total, SUM(valor) AS total2 FROM '.$this->_name.' '.$filter.' '.$orders;
+        echo $select."<br>";
         $res = $this->_conn->query( $select )->fetchAsObject();
         return $res;
     }
@@ -360,6 +360,35 @@ class Administracion_Model_DbTable_Solicitudes extends Db_Table
       FROM solicitudes s 
       JOIN pagare_deceval pd ON s.id = pd.pagare
       ' . $filter . '  ' . $orders;
+    $res = $this->_conn->query($select)->fetchAsObject();
+    return $res;
+  }
+
+  public function getCount($filters = '', $order = '')
+  {
+    $filter = '';
+    if ($filters != '') {
+      $filter = ' WHERE ' . $filters;
+    }
+    $orders = "";
+    if ($order != '') {
+      $orders = ' ORDER BY ' . $order;
+    }
+    $select = 'SELECT COUNT(*) AS total FROM ' . $this->_name . ' ' . $filter . ' ' . $orders;
+    $res = $this->_conn->query($select)->fetchAsObject();
+    return $res;
+  }
+  public function getMounts($filters = '', $order = '')
+  {
+    $filter = '';
+    if ($filters != '') {
+      $filter = ' WHERE ' . $filters;
+    }
+    $orders = "";
+    if ($order != '') {
+      $orders = ' ORDER BY ' . $order;
+    }
+    $select = 'SELECT SUM(valor) AS total FROM ' . $this->_name . ' ' . $filter . ' ' . $orders;
     $res = $this->_conn->query($select)->fetchAsObject();
     return $res;
   }

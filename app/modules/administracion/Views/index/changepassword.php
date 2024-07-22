@@ -13,7 +13,7 @@
         <div class="text-center"><a href="/administracion" class="olvido">Volver al Login</a></div>
     <?php } else { ?>
         <div class="box_password">
-            <form data-toggle="validator" role="form" method="post" action="/administracion/index/changepassword">
+            <form data-bs-toggle="validator" role="form" method="post" action="/administracion/index/changepassword">
                 <input type="hidden" name="code" value="<?php echo $this->code; ?>" />
                 <div class="form-group">
                     <div class="info-olvido"> <strong>USUARIO:</strong> <?php echo $this->usuario; ?></div>

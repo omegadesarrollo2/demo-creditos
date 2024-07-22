@@ -4,7 +4,7 @@ $tipos = array("","OK APORTES","OK CODEUDOR","OK FONDO MUTUAL","OK HIPOTECA","OK
 <div class="container">
 	<div class="row">
 
-		<div class="col-12 text-right"><a href="/administracion/actascomite/formatoanexo/?id=<?php echo $this->id; ?>&pdf=1" target="_blank"><button type="button" class="btn btn-primary">Exportar PDF</button></a> <a class="btn btn-success" href="/administracion/actascomite/">Regresar</a></div>
+		<div class="col-12 text-end"><a href="/administracion/actascomite/formatoanexo/?id=<?php echo $this->id; ?>&pdf=1" target="_blank"><button type="button" class="btn btn-primary">Exportar PDF</button></a> <a class="btn btn-success" href="/administracion/actascomite/">Regresar</a></div>
 
 			<table width="100%" cellpadding="3" cellspacing="0" border="0">
 				<tr>

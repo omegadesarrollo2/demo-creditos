@@ -1,5 +1,5 @@
 
-		<table class=" table table-striped  table-hover table-administrator text-left" border="1" width="100%">
+		<table class=" table table-striped  table-hover table-administrator text-start" border="1" width="100%">
 			<thead>
 				<tr>
 				    <td><strong>id</strong></td>

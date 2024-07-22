@@ -1,7 +1,7 @@
 <h1 class="titulo-principal"><i class="fas fa-users"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
-  <form class="text-left filters" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform;?>"
-    data-toggle="validator">
+  <form class="text-start filters" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform;?>"
+    data-bs-toggle="validator">
     <div class="content-dashboard">
       <input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
       <input type="hidden" name="csrf_section" id="csrf_section" value="<?php echo $this->csrf_section ?>">
@@ -189,7 +189,7 @@
         <input type="hidden" name="user_current_user" value="<?php echo $this->content->user_current_user ?>">
         <input type="hidden" name="user_code" value="<?php echo $this->content->user_code ?>">
         <div class="botones-acciones col-12 d-flex justify-content-end">
-          <button class="btn btn-guardar mr-2" type="submit">Guardar</button>
+          <button class="btn btn-guardar me-2" type="submit">Guardar</button>
           <a href="<?php echo $this->route; ?>" class="btn btn-cancelar">Cancelar</a>
         </div>
       </div>
