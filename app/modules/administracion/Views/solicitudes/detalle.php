@@ -132,6 +132,9 @@
       ];
 
       $documentos = $this->documentos;
+      if($documentos == null){
+        $documentos = new stdClass();
+      }
       $documentos = get_object_vars($documentos);
       unset($documentos['id']);
       unset($documentos['solicitud']);

@@ -3,7 +3,7 @@
         'name' => 'carlosalbertorodriguezlaiton/framework',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3307b7a2c14d30ca3ed8ad721b4e5c316c4ed124',
+        'reference' => '4cac63bc736d90ecaa3e9fbe43e52086eb61298a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'carlosalbertorodriguezlaiton/framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3307b7a2c14d30ca3ed8ad721b4e5c316c4ed124',
+            'reference' => '4cac63bc736d90ecaa3e9fbe43e52086eb61298a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
